@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - PrimeMar</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/messaging.css">
+    <link rel="icon" href="./assets/icons/primebird.svg" type="image/svg+xml">
+</head>
+<body>
+    <div class="app-container">
+        <nav class="navigation">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="./assets/icons/primebird.svg" alt="PrimeMar" class="logo-icon">
+                    <span>PrimeMar</span>
+                </div>
+                <div class="nav-menu" id="navMenu">
+                    <a href="./feed.html" class="nav-link">Feed</a>
+                    <a href="./profile.html" class="nav-link">Profile</a>
+                    <a href="./messages.html" class="nav-link active">Messages</a>
+                    <a href="./wallet.html" class="nav-link">Wallet</a>
+                    <a href="./settings.html" class="nav-link">Settings</a>
+                    <a href="javascript:void(0)" class="nav-link" id="logoutLink">Logout</a>
+                </div>
+                <div class="nav-toggle" id="navToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+
+        <div class="messages-container">
+            <!-- Conversations List -->
+            <div class="conversations-sidebar">
+                <div class="conversations-header">
+                    <h2>Messages</h2>
+                    <button class="btn-icon" id="newMessageBtn" title="New Message">+</button>
+                </div>
+
+                <div class="search-box">
+                    <input type="text" id="conversationSearch" placeholder="Search conversations...">
+                </div>
+
+                <div id="conversationsList" class="conversations-list">
+                    <div class="loading">Loading conversations...</div>
+                </div>
+            </div>
+
+            <!-- Chat Area -->
+            <div class="chat-area">
+                <div id="noChatSelected" class="no-chat-selected">
+                    <div class="empty-state">
+                        <img src="./assets/icons/primebird.svg" alt="">
+                        <h2>Select a conversation</h2>
+                        <p>Start messaging with other users</p>
+                    </div>
+                </div>
+
+                <div id="chatWindow" class="chat-window hidden">
+                    <!-- Chat Header -->
+                    <div class="chat-header">
+                        <div class="chat-user-info">
+                            <img id="chatUserAvatar" src="" alt="" class="avatar">
+                            <div>
+                                <h3 id="chatUserName"></h3>
+                                <span id="onlineStatus" class="status">offline</span>
+                            </div>
+                        </div>
+                        <div class="chat-actions">
+                            <button class="btn-icon" id="blockUserBtn" title="Block">🚫</button>
+                            <button class="btn-icon" id="reportChatBtn" title="Report">⚠️</button>
+                        </div>
+                    </div>
+
+                    <!-- Messages -->
+                    <div id="messagesContainer" class="messages-list">
+                        <div class="loading">Loading messages...</div>
+                    </div>
+
+                    <!-- Typing Indicator -->
+                    <div id="typingIndicator" class="typing-indicator hidden">
+                        <span></span><span></span><span></span>
+                    </div>
+
+                    <!-- Message Input -->
+                    <div class="message-input-area">
+                        <div class="input-wrapper">
+                            <input type="file" id="messageMedia" accept="image/*,video/*,application/pdf,.doc,.docx" class="file-input hidden">
+                            <button type="button" class="btn-icon" id="attachBtn" title="Attach file">📎</button>
+                            <textarea id="messageInput" placeholder="Type a message..." class="message-input"></textarea>
+                            <button type="button" class="btn-icon" id="emojiBtn" title="Emojis">😊</button>
+                        </div>
+                        <button type="button" class="btn-icon send-btn" id="sendMessageBtn">➤</button>
+                    </div>
+
+                    <!-- Media Preview -->
+                    <div id="mediaPreview" class="media-preview hidden"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Message Modal -->
+    <div class="modal" id="newMessageModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Start Conversation</h2>
+                <button class="modal-close" id="closeNewMessageModal">&times;</button>
+            </div>
+            <div class="form-group">
+                <input type="text" id="userSearch" placeholder="Search users..." class="search-input">
+                <div id="userSearchResults" class="search-results"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Chat Modal -->
+    <div class="modal" id="reportModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Report Conversation</h2>
+                <button class="modal-close" id="closeReportModal">&times;</button>
+            </div>
+            <form id="reportForm" class="form">
+                <div class="form-group">
+                    <label for="reportReason">Reason</label>
+                    <select id="reportReason" required>
+                        <option value="">Select a reason</option>
+                        <option value="harassment">Harassment</option>
+                        <option value="spam">Spam</option>
+                        <option value="inappropriate">Inappropriate Content</option>
+                        <option value="scam">Scam/Fraud</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reportDetails">Details</label>
+                    <textarea id="reportDetails" placeholder="Provide more details..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Report</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/config/supabase.js"></script>
+    <script src="../js/config/constants.js"></script>
+    <script src="../js/utils/validation.js"></script>
+    <script src="../js/utils/helpers.js"></script>
+    <script src="../js/utils/error-handler.js"></script>
+    <script src="../js/auth/session.js"></script>
+    <script src="../js/storage/upload.js"></script>
+    <script src="../js/messaging/messaging.js"></script>
+    <script src="../js/messaging/chat.js"></script>
+    <script src="../js/messaging/realtime.js"></script>
+    <script src="../js/messaging/typing-indicator.js"></script>
+</body>
+</html>
