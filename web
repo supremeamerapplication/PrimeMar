@@ -1,0 +1,154 @@
+Project Name: PrimeMar Official Website
+Domain: www.primemar.com
+Purpose: Public-facing website to showcase PrimeMar app, attract users & creators, explain monetization, boost trust, support payments, and display admin metrics.
+Admin Email: supremealpha04@gmail.com
+Tech Stack: HTML, CSS, JS (Bootstrap/Tailwind optional), Vercel hosting
+Storage: Single bucket media for all images, videos, icons, documents
+1️⃣ WEBSITE PURPOSE & OBJECTIVES
+Build credibility & trust for users, creators, investors, and payment platforms.
+Promote PrimeMar app: screenshots, features, demo videos, QR codes.
+Explain monetization & SA token system.
+Support payment integrations: Paystack, Flutterwave.
+Include legal & compliance pages.
+Showcase admin transparency metrics (publicly or restricted view).
+Highlight verified creators & boost system.
+Attract subscriptions & creators sign-ups.
+2️⃣ REQUIRED PAGES
+Home Page (index.html)
+Hero section: Headline, CTA buttons (Join Now / Download App), screenshot carousel/video.
+Features overview: SA system, verified creators 💠, boosting, messaging, posting.
+Monetization teaser: verification fees, subscriptions, boosts.
+Testimonials/community proof.
+Footer: Links to About, Privacy, Terms, Refund, Cookie, Contact.
+About Page (about.html)
+Company mission, vision, story.
+Professional, concise copy explaining PrimeMar.
+How It Works (how-it-works.html)
+Step-by-step guide:
+Sign up → create account
+Verify → $25 + 3k followers minimum
+Post content → text, image, video, files
+Earn SA → 0.5 SA per follower daily, max 80 SA/day
+Boost posts → 100 SA cost, 2-day duration
+Withdraw SA → convert to USD/NGN, min $5
+Include diagrams/icons for clarity.
+Pricing & Monetization (pricing.html)
+Table of fees:
+Feature
+Price
+Verification Fee
+$25
+Subscription
+$7/month
+Boost
+100 SA
+SA daily limit
+80 SA/day
+Minimum Withdraw
+$5
+Explain SA split: 50% creator, 30% platform, 20% reserved.
+Mention ad revenue goes to platform; max 1 ad per post.
+Creator Hub (creator-hub.html)
+Explain creator rules, verification 💠, subscriptions.
+Boosting guide: duration, cost, benefits, additional SA for boosters.
+Ads display and revenue model.
+FAQ on earnings, withdrawals, and boosting.
+Contact Page (contact.html)
+Form: Name, Email, Message
+Admin email: supremealpha04@gmail.com
+Optional live chat integration.
+Legal Pages
+privacy.html → Privacy Policy (GDPR/NGN compliant)
+terms.html → Terms & Conditions
+refund.html → Refund Policy
+cookie.html → Cookie Policy
+Optional Pages
+Blog/News → announcements, tips, updates
+Stats → total users, active users, verified creators, SA in circulation
+3️⃣ FEATURES
+A. User-Facing Features Highlighted on Website
+Social networking overview: posting, following, likes, comments, sharing
+Verified creators 💠
+SA token system explained: earning, daily limits, boosts, conversions
+Boost system: costs, visibility, benefits
+Subscriptions: $7/month for verified creator content
+Messaging preview (no personal data shown)
+Ad system: max 1 ad/post, platform revenue
+Withdrawal system: min $5, cooldowns, instant conversion
+
+B. Admin Transparency & Metrics
+Total users
+Active users (last 7 days)
+Verified creators 💠
+Subscribed users
+Total SA distributed (daily/weekly/monthly/yearly)
+Platform earnings from boosts & ads
+Withdrawals transaction history (success/fail)
+4️⃣ DESIGN STYLE
+Colors: Primary Blue (#1d9bf0), Dark Navy, White, Soft Gray
+Fonts: Poppins, Inter, Montserrat
+Icons: FontAwesome, Lucide, Material Icons
+Layout: Clean, professional, modern, mobile-first
+Rounded cards, soft shadows, smooth hero animations
+Logo: Twitter-style bird near “Primemar” text
+Verified badge: 💠 (for verified creators)
+5️⃣ TECH STACK & DEPLOYMENT
+Frontend: HTML, CSS, JS, Tailwind/Bootstrap optional
+Hosting: Vercel/Netlify/Static host
+Storage Bucket: /media for screenshots, icons, videos, images
+Environment Variables:
+Copy code
+
+PAYSTACK_SECRET_KEY=
+FLUTTERWAVE_SECRET_KEY=
+All pages should be responsive and professional
+6️⃣ FILE STRUCTURE
+Copy code
+
+/public
+  index.html
+  about.html
+  how-it-works.html
+  pricing.html
+  creator-hub.html
+  contact.html
+  privacy.html
+  terms.html
+  refund.html
+  cookie.html
+  /css
+    base.css
+    layout.css
+    components.css
+    responsive.css
+  /js
+    main.js
+    carousel.js
+    contact-form.js
+  /media
+    hero/
+    screenshots/
+    icons/
+7️⃣ PAYMENTS & MONETIZATION
+Category: Business Services
+Sub-category: Marketing & Advertising OR Business Services (Not Certified Elsewhere)
+Payment flows explained clearly on website (verification, subscription, boost, SA)
+Foreign user currency conversion: USD/NGN
+SA system: daily limit 80 SA, reserve 20% of boost SA not burned
+Withdrawals: $5 min, instant conversion, transaction logged
+8️⃣ SECURITY & COMPLIANCE
+SSL enabled
+GDPR + Cookie banners
+Secure forms for contact/subscriptions
+Legal pages required for payment integration
+Footer links to legal pages on every page
+9️⃣ CTA / MARKETING
+Clear “Download App” or “Join Now” buttons
+Explain monetization and verified creator benefits
+Encourage subscriptions and boosts
+Showcase testimonials and community stats
+10️⃣ ADMIN ACCESS FOR WEBSITE
+Email: supremealpha04@gmail.com
+Manage blog posts
+Update platform metrics (SA, users, verified creators)
+Reply to contact form submissions
