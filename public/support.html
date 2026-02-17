@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support - PrimeMar</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/support.css">
+  <link rel="icon" href="./assets/icons/primebird.svg" type="image/svg+xml">
+</head>
+<body>
+  <div id="root">
+    <nav class="navigation">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <img src="./assets/icons/primebird.svg" alt="PrimeMar" class="logo-icon">
+          <span>PrimeMar</span>
+        </div>
+        <div class="nav-menu" id="navMenu">
+          <a href="./feed.html" class="nav-link">Feed</a>
+          <a href="./profile.html" class="nav-link">Profile</a>
+          <a href="./messages.html" class="nav-link">Messages</a>
+          <a href="./wallet.html" class="nav-link">Wallet</a>
+          <a href="./support.html" class="nav-link active">Support</a>
+          <a href="javascript:void(0)" class="nav-link" id="logoutLink">Logout</a>
+        </div>
+        <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+      </div>
+    </nav>
+
+    <main class="landing-container">
+      <section class="hero">
+        <div class="hero-content">
+          <h1>Support Center</h1>
+          <p>Ask the PrimeMar assistant for help or create a support ticket — available 24/7.</p>
+        </div>
+      </section>
+
+      <section class="support-grid">
+        <div class="support-chat card">
+          <div class="chat-header">
+            <h3>PrimeMar Assistant</h3>
+            <small>Automated help while support is offline</small>
+          </div>
+          <div id="chatMessages" class="chat-messages"></div>
+          <form id="chatForm" class="chat-form">
+            <input id="chatInput" placeholder="Describe your issue (e.g., can't login, withdraw error)" autocomplete="off">
+            <button class="btn btn-primary" type="submit">Send</button>
+          </form>
+          <div class="chat-actions">
+            <button id="createTicketBtn" class="btn btn-secondary">Create Support Ticket</button>
+            <button id="viewTicketsBtn" class="btn btn-icon">📄</button>
+          </div>
+        </div>
+
+        <aside class="support-faq card">
+          <h3>Quick Solutions</h3>
+          <ul id="faqList" class="faq-list"></ul>
+          <h4>Common Topics</h4>
+          <div class="tags">
+            <button class="tag">Login</button>
+            <button class="tag">Withdrawals</button>
+            <button class="tag">Verification</button>
+            <button class="tag">Profile</button>
+            <button class="tag">Payments</button>
+          </div>
+        </aside>
+      </section>
+
+    </main>
+  </div>
+
+  <div id="ticketsModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header"><h2>Your Tickets</h2><button class="modal-close" id="closeTickets">&times;</button></div>
+      <div class="modal-body" id="ticketsList"></div>
+    </div>
+  </div>
+
+  <script src="../js/support/chatbot.js"></script>
+</body>
+</html>

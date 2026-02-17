@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - PrimeMar</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="icon" href="./assets/icons/primebird.svg" type="image/svg+xml">
+</head>
+<body>
+    <div class="app-container">
+        <nav class="navigation">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="./assets/icons/primebird.svg" alt="PrimeMar" class="logo-icon">
+                    <span>PrimeMar</span>
+                </div>
+                <div class="nav-menu" id="navMenu">
+                    <a href="./feed.html" class="nav-link">Feed</a>
+                    <a href="./profile.html" class="nav-link active">Profile</a>
+                    <a href="./messages.html" class="nav-link">Messages</a>
+                    <a href="./wallet.html" class="nav-link">Wallet</a>
+                        <a href="./support.html" class="nav-link">Support</a>
+                    <a href="javascript:void(0)" class="nav-link" id="logoutLink">Logout</a>
+                </div>
+                <div class="nav-toggle" id="navToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+
+        <div class="profile-container">
+            <!-- Profile Header -->
+            <div class="profile-header">
+                <div class="profile-background"></div>
+                <div class="profile-info">
+                    <div class="profile-avatar-container">
+                        <img id="profileAvatar" src="" alt="Profile" class="profile-avatar">
+                    </div>
+                    <div class="profile-details">
+                        <div class="profile-name-section">
+                            <h1 id="profileDisplayName"></h1>
+                            <span id="verifiedBadge" class="verified-badge hidden">💠</span>
+                        </div>
+                        <p id="profileUsername" class="username"></p>
+                        <p id="profileBio" class="bio"></p>
+                        
+                        <div class="profile-stats">
+                            <div class="stat">
+                                <span class="stat-value" id="viewsCount">0</span>
+                                <span class="stat-label">Views</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value" id="postsCount">0</span>
+                                <span class="stat-label">Connects</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value" id="followersCount">0</span>
+                                <span class="stat-label">Followers</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value" id="followingCount">0</span>
+                                <span class="stat-label">Following</span>
+                            </div>
+                        </div>
+
+                        <div class="profile-actions" id="profileActions">
+                            <!-- Actions will be loaded dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Tabs -->
+            <div class="profile-tabs">
+                <button class="tab-btn active" data-tab="connects">Connects</button>
+                <button class="tab-btn" data-tab="media">Media</button>
+                <button class="tab-btn" data-tab="likes">Likes</button>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="tab-content">
+                <!-- Connects Tab -->
+                <div id="connectsTab" class="tab-panel active">
+                    <div id="userConnects" class="posts-list">
+                        <div class="loading">Loading connects...</div>
+                    </div>
+                </div>
+
+                <!-- Media Tab -->
+                <div id="mediaTab" class="tab-panel">
+                    <div id="userMedia" class="media-grid">
+                        <div class="loading">Loading media...</div>
+                    </div>
+                </div>
+
+                <!-- Likes Tab -->
+                <div id="likesTab" class="tab-panel">
+                    <div id="userLikes" class="posts-list">
+                        <div class="loading">Loading liked connects...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal" id="editProfileModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Profile</h2>
+                <button class="modal-close" id="closeEditModal">&times;</button>
+            </div>
+            <form id="editProfileForm" class="form">
+                <div class="form-group">
+                    <label for="editDisplayName">Display Name</label>
+                    <input type="text" id="editDisplayName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editBio">Bio</label>
+                    <textarea id="editBio" maxlength="160"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editAvatar">Profile Picture</label>
+                    <input type="file" id="editAvatar" accept="image/*">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Follow Modal -->
+    <div class="modal" id="followersModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="followersModalTitle">Followers</h2>
+                <button class="modal-close" id="closeFollowersModal">&times;</button>
+            </div>
+            <div id="followersList" class="users-list"></div>
+        </div>
+    </div>
+
+    <script src="../js/config/supabase.js"></script>
+    <script src="../js/config/constants.js"></script>
+    <script src="../js/utils/validation.js"></script>
+    <script src="../js/utils/helpers.js"></script>
+    <script src="../js/auth/session.js"></script>
+    <script src="../js/storage/upload.js"></script>
+    <script src="../js/profile/profile.js"></script>
+    <script src="../js/profile/follow.js"></script>
+    <script src="../js/profile/verification.js"></script>
+</body>
+</html>

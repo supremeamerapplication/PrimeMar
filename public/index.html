@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrimeMar - Social Asset Network</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="icon" href="./assets/icons/primebird.svg" type="image/svg+xml">
+</head>
+<body>
+    <div id="root">
+        <nav class="navigation">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="./assets/icons/primebird.svg" alt="PrimeMar" class="logo-icon">
+                    <span>PrimeMar</span>
+                </div>
+                <div class="nav-menu" id="navMenu">
+                    <a href="./feed.html" class="nav-link">Feed</a>
+                    <a href="./profile.html" class="nav-link">Profile</a>
+                    <a href="./messages.html" class="nav-link">Messages</a>
+                    <a href="./wallet.html" class="nav-link">Wallet</a>
+                    <a href="./support.html" class="nav-link">Support</a>
+                    <a href="javascript:void(0)" class="nav-link" id="settingsLink">Settings</a>
+                    <a href="javascript:void(0)" class="nav-link" id="logoutLink">Logout</a>
+                </div>
+                <div class="nav-toggle" id="navToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+
+        <div class="landing-container">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Welcome to PrimeMar</h1>
+                    <p>Connect, Share, and Earn with Our Social Asset Network</p>
+                    <div class="hero-buttons">
+                        <a href="./login.html" class="btn btn-primary">Login</a>
+                        <a href="./signup.html" class="btn btn-secondary">Sign Up</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="./assets/icons/primebird.svg" alt="PrimeMar Bird">
+                </div>
+            </section>
+
+            <section class="features">
+                <h2>Why PrimeMar?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>💬 Connect & Share</h3>
+                        <p>Create Connects, engage with your community, and build meaningful relationships</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>💰 Earn SA</h3>
+                        <p>Earn Social Assets through engagement and convert to USD or NGN instantly</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>💎 Get Verified</h3>
+                        <p>Become a verified creator and unlock exclusive benefits and higher visibility</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>📱 Real-time Messaging</h3>
+                        <p>Private one-to-one messaging with real-time updates and file sharing</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🚀 Boost Your Reach</h3>
+                        <p>Boost your Connects for increased visibility and engagement</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🔒 Secure Payments</h3>
+                        <p>Withdraw your earnings safely using Paystack or Flutterwave</p>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <div class="footer-content">
+                    <p>&copy; 2026 PrimeMar. All rights reserved.</p>
+                    <div class="footer-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Contact</a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="../js/config/supabase.js"></script>
+    <script>
+        // Check if user is already logged in
+        const checkAuth = () => {
+            const user = localStorage.getItem('primemar_user');
+            if (user) {
+                window.location.href = './feed.html';
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', checkAuth);
+
+        // Navigation toggle for mobile
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+        if (navToggle) {
+            navToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+            });
+        }
+
+        // Settings and logout
+        const settingsLink = document.getElementById('settingsLink');
+        const logoutLink = document.getElementById('logoutLink');
+
+        if (settingsLink) {
+            settingsLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.href = './settings.html';
+            });
+        }
+
+        if (logoutLink) {
+            logoutLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('primemar_user');
+                localStorage.removeItem('primemar_token');
+                window.location.href = './index.html';
+            });
+        }
+    </script>
+</body>
+</html>

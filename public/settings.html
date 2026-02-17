@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - PrimeMar</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="../css/settings.css">
+    <link rel="icon" href="./assets/icons/primebird.svg" type="image/svg+xml">
+</head>
+<body>
+    <div class="app-container">
+        <nav class="navigation">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="./assets/icons/primebird.svg" alt="PrimeMar" class="logo-icon">
+                    <span>PrimeMar</span>
+                </div>
+                <div class="nav-menu" id="navMenu">
+                    <a href="./feed.html" class="nav-link">Feed</a>
+                    <a href="./profile.html" class="nav-link">Profile</a>
+                    <a href="./messages.html" class="nav-link">Messages</a>
+                    <a href="./wallet.html" class="nav-link">Wallet</a>
+                    <a href="./settings.html" class="nav-link active">Settings</a>
+                    <a href="javascript:void(0)" class="nav-link" id="logoutLink">Logout</a>
+                </div>
+                <div class="nav-toggle" id="navToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+
+        <div class="settings-container">
+            <div class="settings-sidebar">
+                <button class="settings-btn active" data-section="account">Account</button>
+                <button class="settings-btn" data-section="privacy">Privacy & Security</button>
+                <button class="settings-btn" data-section="notifications">Notifications</button>
+                <button class="settings-btn" data-section="subscription">Subscription</button>
+                <button class="settings-btn" data-section="verification">Verification</button>
+                <button class="settings-btn" data-section="blocked">Blocked Users</button>
+                <button class="settings-btn" data-section="danger">Danger Zone</button>
+            </div>
+
+            <div class="settings-content">
+                <!-- Account Settings -->
+                <section id="accountSection" class="settings-section active">
+                    <h2>Account Settings</h2>
+                    <div class="settings-card">
+                        <h3>Profile Information</h3>
+                        <form id="profileForm" class="form">
+                            <div class="form-group">
+                                <label for="displayName">Display Name</label>
+                                <input type="text" id="displayName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" id="username" disabled>
+                                <small>Username cannot be changed</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="bio">Bio</label>
+                                <textarea id="bio" maxlength="160"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="profilePicture">Profile Picture</label>
+                                <input type="file" id="profilePicture" accept="image/*">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Email & Password</h3>
+                        <form id="emailPasswordForm" class="form">
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password</label>
+                                <input type="password" id="currentPassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="newEmail">New Email (optional)</label>
+                                <input type="email" id="newEmail">
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">New Password (optional)</label>
+                                <input type="password" id="newPassword">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmNewPassword">Confirm New Password</label>
+                                <input type="password" id="confirmNewPassword">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Privacy & Security -->
+                <section id="privacySection" class="settings-section">
+                    <h2>Privacy & Security</h2>
+                    <div class="settings-card">
+                        <h3>Privacy Settings</h3>
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="privateAccount">
+                                <span>Private Account</span>
+                            </label>
+                            <p class="setting-description">Only people you approve can see your Connects</p>
+                        </div>
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="allowMessages">
+                                <span>Allow Messages from Anyone</span>
+                            </label>
+                            <p class="setting-description">Let anyone message you</p>
+                        </div>
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="allowFollowing">
+                                <span>Allow Public Following List</span>
+                            </label>
+                            <p class="setting-description">Show who you're following</p>
+                        </div>
+                        <button class="btn btn-secondary" id="savePrivacyBtn">Save Privacy Settings</button>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Two-Factor Authentication</h3>
+                        <button class="btn btn-primary" id="enable2FABtn">Enable 2FA</button>
+                        <button class="btn btn-secondary hidden" id="disable2FABtn">Disable 2FA</button>
+                    </div>
+                </section>
+
+                <!-- Notifications -->
+                <section id="notificationsSection" class="settings-section">
+                    <h2>Notifications</h2>
+                    <div class="settings-card">
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="notifyLikes" checked>
+                                <span>Likes Notifications</span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="notifyComments" checked>
+                                <span>Comments Notifications</span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="notifyFollows" checked>
+                                <span>New Followers Notifications</span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="notifyMessages" checked>
+                                <span>Messages Notifications</span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="notifyWithdrawals" checked>
+                                <span>Withdrawal Updates</span>
+                            </label>
+                        </div>
+                        <button class="btn btn-secondary" id="saveNotificationsBtn">Save Preferences</button>
+                    </div>
+                </section>
+
+                <!-- Subscription -->
+                <section id="subscriptionSection" class="settings-section">
+                    <h2>Subscription</h2>
+                    <div class="settings-card">
+                        <h3>Subscribe to Premium</h3>
+                        <p>Unlock exclusive benefits and earn more SA</p>
+                        <div class="subscription-info">
+                            <ul>
+                                <li>Earn up to 5 SA per day</li>
+                                <li>Priority support</li>
+                                <li>Exclusive features</li>
+                            </ul>
+                            <p class="price">$7/month</p>
+                        </div>
+                        <button class="btn btn-primary" id="subscribeBtn">Subscribe Now</button>
+                    </div>
+
+                    <div id="activeSubscription" class="settings-card hidden">
+                        <h3>Active Subscription</h3>
+                        <p id="subscriptionStatus"></p>
+                        <p id="renewalDate"></p>
+                        <button class="btn btn-secondary" id="cancelSubscriptionBtn">Cancel Subscription</button>
+                    </div>
+                </section>
+
+                <!-- Verification -->
+                <section id="verificationSection" class="settings-section">
+                    <h2>Creator Verification</h2>
+                    <div class="settings-card">
+                        <h3>Become a Verified Creator 💠</h3>
+                        <div class="verification-requirements">
+                            <p>To be verified, you need:</p>
+                            <ul id="verificationChecklist">
+                                <li>
+                                    <span class="requirement-icon">⭕</span>
+                                    <span class="requirement-text">3,000 followers</span>
+                                    <span class="requirement-status" id="followerReq"></span>
+                                </li>
+                                <li>
+                                    <span class="requirement-icon">⭕</span>
+                                    <span class="requirement-text">$25 verification fee</span>
+                                    <span class="requirement-status">Ready</span>
+                                </li>
+                                <li>
+                                    <span class="requirement-icon">⭕</span>
+                                    <span class="requirement-text">Admin approval</span>
+                                    <span class="requirement-status">Automatic after payment</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-primary" id="applyVerificationBtn">Apply for Verification</button>
+                    </div>
+
+                    <div id="verificationStatus" class="settings-card hidden">
+                        <h3>Verification Status</h3>
+                        <p id="verificationStatusText"></p>
+                    </div>
+                </section>
+
+                <!-- Blocked Users -->
+                <section id="blockedSection" class="settings-section">
+                    <h2>Blocked Users</h2>
+                    <div id="blockedList" class="blocked-users-list">
+                        <p class="empty-state">You haven't blocked anyone yet</p>
+                    </div>
+                </section>
+
+                <!-- Danger Zone -->
+                <section id="dangerSection" class="settings-section">
+                    <h2>Danger Zone</h2>
+                    <div class="settings-card danger">
+                        <h3>Deactivate Account</h3>
+                        <p>Temporarily deactivate your account. You can reactivate anytime within 30 days.</p>
+                        <button class="btn btn-danger" id="deactivateBtn">Deactivate Account</button>
+                    </div>
+
+                    <div class="settings-card danger">
+                        <h3>Delete Account</h3>
+                        <p>Permanently delete your account and all associated data. This cannot be undone.</p>
+                        <button class="btn btn-danger" id="deleteBtn">Delete Account</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Verification Payment Modal -->
+    <div class="modal" id="verificationPaymentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Verification Payment</h2>
+                <button class="modal-close" id="closeVerificationModal">&times;</button>
+            </div>
+            <div class="payment-summary">
+                <p>Verification Fee: <strong>$25</strong></p>
+            </div>
+            <div class="payment-methods">
+                <button class="payment-method" id="paymentPaystack">
+                    <span>Paystack</span>
+                </button>
+                <button class="payment-method" id="paymentFlutterwave">
+                    <span>Flutterwave</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modals -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="confirmTitle"></h2>
+                <button class="modal-close" id="closeConfirmModal">&times;</button>
+            </div>
+            <p id="confirmMessage"></p>
+            <div class="modal-actions">
+                <button class="btn btn-danger" id="confirmActionBtn">Yes, Confirm</button>
+                <button class="btn btn-secondary" id="cancelConfirmBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/config/supabase.js"></script>
+    <script src="../js/config/constants.js"></script>
+    <script src="../js/utils/validation.js"></script>
+    <script src="../js/utils/helpers.js"></script>
+    <script src="../js/auth/session.js"></script>
+    <script src="../js/payments/subscription.js"></script>
+    <script src="../js/payments/verification.js"></script>
+    <script src="../js/profile/verification.js"></script>
+</body>
+</html>

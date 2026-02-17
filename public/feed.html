@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed - PrimeMar</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/feed.css">
+    <link rel="icon" href="./assets/icons/primebird.svg" type="image/svg+xml">
+</head>
+<body>
+    <div class="app-container">
+        <nav class="navigation">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="./assets/icons/primebird.svg" alt="PrimeMar" class="logo-icon">
+                    <span>PrimeMar</span>
+                </div>
+                <div class="nav-menu" id="navMenu">
+                    <a href="./feed.html" class="nav-link active">Feed</a>
+                    <a href="./profile.html" class="nav-link">Profile</a>
+                    <a href="./messages.html" class="nav-link">Messages</a>
+                    <a href="./wallet.html" class="nav-link">Wallet</a>
+                        <a href="./support.html" class="nav-link">Support</a>
+                    <a href="javascript:void(0)" class="nav-link" id="logoutLink">Logout</a>
+                </div>
+                <div class="nav-toggle" id="navToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+
+        <div class="main-content">
+            <aside class="sidebar-left">
+                <div class="sidebar-sticky">
+                    <div class="user-card">
+                        <div class="user-avatar" id="sidebarUserAvatar"></div>
+                        <div class="user-info">
+                            <h3 id="sidebarUsername"></h3>
+                            <p id="sidebarDisplayName"></p>
+                        </div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stat">
+                            <span class="stat-label">SA Balance</span>
+                            <span class="stat-value" id="saBalance">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Followers</span>
+                            <span class="stat-value" id="followerCount">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Connects</span>
+                            <span class="stat-value" id="postCount">0</span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-block" id="createConnectBtn">Create Connect</button>
+                </div>
+            </aside>
+
+            <div class="feed-container">
+                <!-- Create Connect Modal -->
+                <div class="modal" id="createConnectModal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Create a Connect</h2>
+                            <button class="modal-close" id="closeCreateModal">&times;</button>
+                        </div>
+                        <form id="createConnectForm" class="form">
+                            <div class="form-group">
+                                <textarea id="connectContent" placeholder="What's on your mind?" required maxlength="500" class="content-input"></textarea>
+                                <div class="char-count">
+                                    <span id="charCount">0</span>/500
+                                </div>
+                            </div>
+
+                            <div class="media-upload">
+                                <input type="file" id="connectMedia" accept="image/*,video/*" class="file-input">
+                                <label for="connectMedia" class="upload-label">
+                                    <span>📎 Add Image or Video</span>
+                                </label>
+                                <div id="mediaPreview" class="media-preview"></div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Post Connect</button>
+                                <button type="button" class="btn btn-secondary" id="cancelCreateBtn">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Feed Posts -->
+                <div class="feed" id="feedContainer">
+                    <div class="loading">Loading connects...</div>
+                </div>
+            </div>
+
+            <aside class="sidebar-right">
+                <div class="sidebar-sticky">
+                    <div class="search-box">
+                        <input type="text" id="searchBox" placeholder="Search users...">
+                    </div>
+
+                    <div class="trending-section">
+                        <h3>Trending</h3>
+                        <div id="trendingContainer" class="trending-list">
+                            <div class="loading">Loading...</div>
+                        </div>
+                    </div>
+
+                    <div class="suggestions-section">
+                        <h3>Suggested Users</h3>
+                        <div id="suggestionsContainer" class="suggestions-list">
+                            <div class="loading">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Connect Modal (for viewing/editing) -->
+    <div class="modal" id="connectModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="modal-close" id="closeConnectModal">&times;</button>
+            </div>
+            <div id="connectDetail" class="connect-detail"></div>
+        </div>
+    </div>
+
+    <script src="../js/config/supabase.js"></script>
+    <script src="../js/config/constants.js"></script>
+    <script src="../js/utils/validation.js"></script>
+    <script src="../js/utils/helpers.js"></script>
+    <script src="../js/utils/error-handler.js"></script>
+    <script src="../js/auth/session.js"></script>
+    <script src="../js/storage/upload.js"></script>
+    <script src="../js/feed/posts.js"></script>
+    <script src="../js/feed/comments.js"></script>
+    <script src="../js/feed/reactions.js"></script>
+    <script src="../js/feed/feed.js"></script>
+</body>
+</html>

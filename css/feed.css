@@ -1,0 +1,477 @@
+/* ===========================
+   PrimeMar - Feed Styles
+   =========================== */
+
+.app-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    min-height: 100vh;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 250px 1fr 300px;
+    gap: 0;
+    max-width: 1600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.sidebar-left,
+.sidebar-right {
+    background-color: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    padding: 1.5rem;
+}
+
+.sidebar-right {
+    border-left: 1px solid var(--border-color);
+    border-right: none;
+}
+
+.sidebar-sticky {
+    position: sticky;
+    top: 70px;
+}
+
+.user-card {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    background-color: var(--bg-primary);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    flex-shrink: 0;
+    overflow: hidden;
+    object-fit: cover;
+}
+
+.user-info h3 {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.user-info p {
+    font-size: 0.875rem;
+    color: var(--text-tertiary);
+    margin: 0;
+}
+
+.stats-card {
+    background-color: var(--bg-primary);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+    display: grid;
+    gap: 1rem;
+}
+
+.stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.stat-value {
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: var(--primary);
+}
+
+/* Feed Container */
+.feed-container {
+    background-color: var(--bg-primary);
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.feed {
+    padding: 1rem 0;
+}
+
+.post {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.post:hover {
+    background-color: var(--bg-secondary);
+}
+
+.post-header {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.post-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    flex-shrink: 0;
+    overflow: hidden;
+    object-fit: cover;
+}
+
+.post-user-info {
+    flex: 1;
+}
+
+.post-user-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.post-author {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.post-username {
+    color: var(--text-tertiary);
+}
+
+.post-timestamp {
+    font-size: 0.875rem;
+    color: var(--text-tertiary);
+}
+
+.verified-badge {
+    font-size: 1rem;
+}
+
+.verified-badge.hidden {
+    display: none;
+}
+
+.post-content {
+    margin: 1rem 0;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+.post-media {
+    margin: 1rem 0;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    max-height: 500px;
+}
+
+.post-media img,
+.post-media video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-tertiary);
+}
+
+.action-group {
+    display: flex;
+    gap: 2rem;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.875rem;
+}
+
+.action-btn:hover {
+    color: var(--primary);
+}
+
+.action-btn.liked {
+    color: var(--danger);
+}
+
+.action-count {
+    font-size: 0.875rem;
+}
+
+/* Modal for Creating Connect */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: var(--bg-primary);
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-xl);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+}
+
+.content-input {
+    font-size: 1.25rem;
+    padding: 1rem;
+    border: none;
+    background: none;
+    resize: none;
+    width: 100%;
+    color: var(--text-primary);
+    font-family: inherit;
+}
+
+.content-input::placeholder {
+    color: var(--text-tertiary);
+}
+
+.char-count {
+    padding: 0 1rem;
+    color: var(--text-tertiary);
+    font-size: 0.875rem;
+    text-align: right;
+}
+
+.media-upload {
+    border-top: 1px solid var(--border-color);
+    padding: 1rem;
+}
+
+.file-input {
+    display: none;
+}
+
+.upload-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background-color: var(--bg-secondary);
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.upload-label:hover {
+    background-color: var(--bg-tertiary);
+}
+
+.media-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+.preview-item {
+    position: relative;
+    border-radius: 0.375rem;
+    overflow: hidden;
+}
+
+.preview-item img,
+.preview-item video {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+}
+
+.preview-remove {
+    position: absolute;
+    top: 0.25rem;
+    right: 0.25rem;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.form-actions .btn {
+    flex: 1;
+}
+
+/* Trending Section */
+.trending-section,
+.suggestions-section {
+    margin-top: 1.5rem;
+}
+
+.trending-section h3,
+.suggestions-section h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.trending-list,
+.suggestions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.trending-item,
+.suggestion-item {
+    padding: 1rem;
+    background-color: var(--bg-primary);
+    border-radius: 0.375rem;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.trending-item:hover,
+.suggestion-item:hover {
+    background-color: var(--bg-secondary);
+}
+
+.trending-item .topic {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.trending-item .count {
+    color: var(--text-tertiary);
+    font-size: 0.875rem;
+}
+
+.suggestion-header {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.suggestion-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--primary);
+}
+
+.suggestion-name {
+    font-weight: 600;
+    flex: 1;
+}
+
+.suggestion-btn {
+    padding: 0.25rem 0.75rem;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: var(--transition);
+}
+
+.suggestion-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+.suggestion-username {
+    color: var(--text-tertiary);
+    font-size: 0.875rem;
+}
+
+/* Connect Detail */
+.connect-detail {
+    padding: 1.5rem;
+}
+
+@media (max-width: 1200px) {
+    .main-content {
+        grid-template-columns: 1fr 300px;
+    }
+
+    .sidebar-left {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar-right {
+        display: none;
+    }
+
+    .feed-container {
+        border: none;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .post {
+        padding: 1rem;
+    }
+}
