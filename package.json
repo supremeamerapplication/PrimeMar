@@ -1,0 +1,34 @@
+{
+  "name": "primemar",
+  "version": "1.0.0",
+  "description": "PrimeMar - Production-Ready Social Media Platform with SA Economy",
+  "main": "index.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "vercel-build": "vite build",
+    "preview": "vite preview",
+    "start": "vite preview --port $PORT"
+  },
+  "keywords": [
+    "social-media",
+    "fintech",
+    "supabase",
+    "paystack",
+    "flutterwave",
+    "sa-economy"
+  ],
+  "author": "PrimeMar Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.0.0",
+    "vite": "^4.0.0",
+    "vite-plugin-html": "^3.2.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.26.0"
+  }
+}
