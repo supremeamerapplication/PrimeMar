@@ -1,10 +1,8 @@
-/* ===========================
-   PrimeMar - Supabase Configuration
-   =========================== */
 
-// This will be replaced with actual Supabase credentials in .env
-const SUPABASE_URL = 'https://YOUR_SUPABASE_URL.supabase.co';
-const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
+
+const SUPABASE_URL = 'https://nbnijrrkkyvsgawziwlo.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ibmlqcnJra3l2c2dhd3ppd2xvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMTExODYsImV4cCI6MjA4Njg4NzE4Nn0.uSdHfHbsJteCWISB2siHZr7CoE_TzeP_LOBcH6LdMrc
+';
 
 // Initialize Supabase client
 let supabase = null;
@@ -21,3 +19,4 @@ if (typeof supabaseClient !== 'undefined') {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { supabase };
 }
+
