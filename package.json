@@ -1,7 +1,7 @@
 {
   "name": "primemar",
   "version": "1.0.0",
-  "description": "PrimeMar - Production-Ready Social Media Platform with SA Economy",
+  "description": "PrimeMar - A modern social media platform with a unique SA Token economy, verified creators, secure subscriptions, and instant transactions.",
   "main": "index.js",
   "engines": {
     "node": ">=18"
@@ -9,7 +9,6 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "vercel-build": "vite build",
     "preview": "vite preview",
     "start": "vite preview --port $PORT"
   },
@@ -19,7 +18,9 @@
     "supabase",
     "paystack",
     "flutterwave",
-    "sa-economy"
+    "sa-economy",
+    "content-platform",
+    "verified-creators"
   ],
   "author": "PrimeMar Team",
   "license": "MIT",
