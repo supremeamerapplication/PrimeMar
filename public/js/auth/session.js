@@ -1,54 +1,42 @@
-/* ===========================
-   PrimeMar - Session Management
-   =========================== */
+// session.js
+import { AUTH, supabase } from './auth.js';
 
-const SESSION = {
-    // Initialize session
+// Session module
+export const SESSION = {
+    // Initialize session on page load
     init: async () => {
         try {
             const user = AUTH.getCurrentUser();
-            if (!user) {
-                // Check if we're on a protected page
-                const publicPages = ['/index.html', '/login.html', '/signup.html', '/404.html'];
-                const currentPath = window.location.pathname;
-                const isPublicPage = publicPages.some(page => currentPath.includes(page));
+            const publicPages = ['/index.html', '/login.html', '/signup.html', '/404.html'];
+            const currentPath = window.location.pathname;
 
-                if (!isPublicPage) {
-                    window.location.href = './login.html';
-                }
+            if (!user && !publicPages.some(page => currentPath.includes(page))) {
+                window.location.href = '/login.html';
                 return;
             }
 
-            // Load user profile
-            await SESSION.loadUserProfile(user.id);
+            if (user) {
+                await SESSION.loadUserProfile(user.id);
+                SESSION.updateSidebarInfo();
+                SESSION.setupLogoutButton();
+            }
 
-            // Setup logout button
-            SESSION.setupLogoutButton();
-
-            // Setup sidebar info
-            SESSION.updateSidebarInfo();
         } catch (error) {
-            console.error('Error initializing session:', error);
+            console.error('Session init error:', error);
         }
     },
 
     // Load user profile
     loadUserProfile: async (userId) => {
         try {
-            if (!supabase) throw new Error('Supabase not initialized');
-
-            const { data, error } = await supabase
-                .from(CONFIG.TABLES.PROFILES)
-                .select('*')
-                .eq('user_id', userId)
-                .single();
-
+            const { data, error } = await supabase.from('profiles').select('*').eq('user_id', userId).single();
             if (error) throw error;
 
             localStorage.setItem('primemar_profile', JSON.stringify(data));
             return data;
+
         } catch (error) {
-            console.error('Error loading profile:', error);
+            console.error('Load profile error:', error);
         }
     },
 
@@ -58,7 +46,7 @@ const SESSION = {
         return profileJSON ? JSON.parse(profileJSON) : null;
     },
 
-    // Update sidebar info
+    // Update sidebar/profile UI
     updateSidebarInfo: () => {
         const profile = SESSION.getUserProfile();
         if (!profile) return;
@@ -75,19 +63,14 @@ const SESSION = {
         };
 
         Object.entries(elements).forEach(([key, el]) => {
-            if (el && key.includes('Username')) {
-                el.textContent = `@${profile.username}`;
-            } else if (el && key.includes('DisplayName')) {
-                el.textContent = profile.display_name;
-            } else if (el && key.includes('Avatar')) {
-                el.src = profile.avatar_url || './assets/icons/primebird.svg';
-            } else if (el && key.includes('UserName')) {
-                el.textContent = profile.display_name;
-            }
+            if (!el) return;
+            if (key.toLowerCase().includes('username')) el.textContent = `@${profile.username}`;
+            else if (key.toLowerCase().includes('displayname')) el.textContent = profile.display_name;
+            else if (key.toLowerCase().includes('avatar')) el.src = profile.avatar_url || '/assets/icons/primebird.svg';
         });
     },
 
-    // Setup logout button
+    // Setup logout buttons
     setupLogoutButton: () => {
         const logoutLinks = document.querySelectorAll('#logoutLink, #adminLogoutLink');
         logoutLinks.forEach(link => {
@@ -98,61 +81,23 @@ const SESSION = {
         });
     },
 
-    // Check admin access
-    isAdmin: () => {
-        const user = AUTH.getCurrentUser();
-        return user && user.email === CONFIG.ADMIN.EMAIL;
-    },
-
-    // Redirect if not admin
-    requireAdmin: () => {
-        if (!SESSION.isAdmin()) {
-            ERROR_HANDLER.showError('Admin access required');
-            setTimeout(() => {
-                window.location.href = './feed.html';
-            }, 2000);
-            return false;
-        }
-        return true;
-    },
-
-    // Get wallet
-    getWallet: async (userId) => {
-        try {
-            if (!supabase) throw new Error('Supabase not initialized');
-
-            const { data, error } = await supabase
-                .from(CONFIG.TABLES.WALLETS)
-                .select('*')
-                .eq('user_id', userId)
-                .single();
-
-            if (error) throw error;
-
-            return data;
-        } catch (error) {
-            console.error('Error loading wallet:', error);
-            return null;
-        }
-    },
-
-    // Update last activity
+    // Update last activity in Supabase
     updateLastActivity: async () => {
         try {
             const user = AUTH.getCurrentUser();
-            if (!user || !supabase) return;
+            if (!user) return;
 
-            await supabase
-                .from(CONFIG.TABLES.USERS)
+            await supabase.from('users')
                 .update({ last_activity: new Date().toISOString() })
                 .eq('id', user.id);
+
         } catch (error) {
             console.error('Error updating activity:', error);
         }
-    },
+    }
 };
 
-// Initialize session on page load
+// Initialize session when DOM is ready
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', SESSION.init);
 } else {
@@ -162,7 +107,5 @@ if (document.readyState === 'loading') {
 // Update activity every 5 minutes
 setInterval(SESSION.updateLastActivity, 5 * 60 * 1000);
 
-// Export session
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { SESSION };
-}
+// Optional: make SESSION globally available
+window.SESSION = SESSION;
