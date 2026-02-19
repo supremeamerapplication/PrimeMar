@@ -1,0 +1,67 @@
+/* Settings page specific styles */
+.settings-container {
+  max-width: 1100px;
+  margin: 2rem auto;
+  display: flex;
+  gap: 1.25rem;
+  padding: 0 1rem;
+}
+
+.settings-sidebar {
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.settings-btn {
+  text-align: left;
+  padding: 0.75rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.settings-btn.active {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.settings-content {
+  flex: 1 1 auto;
+}
+
+.settings-section { display: none; }
+.settings-section.active { display: block; }
+
+.settings-card {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+}
+
+.setting-item { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:0.6rem 0; }
+.setting-label { display:flex; align-items:center; gap:0.5rem; font-weight:600; }
+.setting-description { color: var(--text-tertiary); margin-top:0.25rem; }
+
+.hidden { display:none !important; }
+
+.danger { border-color: rgba(239,68,68,0.12); background: linear-gradient(180deg, rgba(254,229,229,0.6), var(--bg-primary)); }
+
+.subscription-info { display:flex; align-items:center; gap:1rem; justify-content:space-between; }
+.subscription-info .price { font-weight:700; color:var(--primary); }
+
+.blocked-users-list { min-height:80px; padding:0.5rem; }
+.blocked-users-list .empty-state { color:var(--text-secondary); }
+
+@media (max-width:880px) {
+  .settings-container { flex-direction: column; }
+  .settings-sidebar { width:100%; display:flex; flex-direction:row; overflow:auto; }
+  .settings-btn { white-space:nowrap; }
+}
