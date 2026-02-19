@@ -1,73 +1,114 @@
-import { createClient } from '@supabase/supabase-js';
+// PrimeMar Login System (Netlify + Supabase CDN Compatible)
 
-// 1️⃣ Initialize Supabase
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+// Import Supabase from CDN (IMPORTANT)
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-// 2️⃣ Elements
+// Supabase credentials (replace with your real values)
+const SUPABASE_URL = 'https://nbnijrrkkyvsgawziwlo.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ibmlqcnJra3l2c2dhd3ppd2xvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMTExODYsImV4cCI6MjA4Njg4NzE4Nn0.uSdHfHbsJteCWISB2siHZr7CoE_TzeP_LOBcH6LdMrc';
+
+// Initialize Supabase
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Elements
 const loginForm = document.getElementById('loginForm');
 const formMessage = document.getElementById('formMessage');
+const loginBtn = document.getElementById('loginBtn');
 const googleBtn = document.getElementById('googleSignIn');
 const githubBtn = document.getElementById('githubSignIn');
 
-// 3️⃣ Helper to show messages
-function showMessage(msg, type = 'error') {
-    formMessage.textContent = msg;
-    formMessage.style.color = type === 'error' ? 'red' : 'green';
+// Show message function
+function showMessage(message, type = 'error') {
+    formMessage.textContent = message;
+    formMessage.style.color = type === 'error' ? '#ff4d4f' : '#10b981';
 }
 
-// 4️⃣ Email/password login
+// Disable / Enable button
+function setLoading(isLoading) {
+    loginBtn.disabled = isLoading;
+    loginBtn.textContent = isLoading ? 'Logging in...' : 'Login';
+}
+
+// Check if already logged in
+function checkExistingSession() {
+    const token = localStorage.getItem('primemar_token');
+    if (token) {
+        window.location.href = '/profile.html';
+    }
+}
+
+// Email Login
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    formMessage.textContent = '';
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    setLoading(true);
+    showMessage('');
+
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
 
     try {
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email,
+            password
+        });
 
         if (error) throw error;
 
-        // Store token & user
+        // Save session
         localStorage.setItem('primemar_token', data.session.access_token);
         localStorage.setItem('primemar_user', JSON.stringify(data.user));
 
         showMessage('Login successful! Redirecting...', 'success');
 
-        // Redirect to dashboard/profile
         setTimeout(() => {
-            window.location.href = './profile.html';
+            window.location.href = '/profile.html';
         }, 1000);
-    } catch (err) {
-        showMessage(err.message);
+
+    } catch (error) {
+        showMessage(error.message);
     }
+
+    setLoading(false);
 });
 
-// 5️⃣ Google login
-googleBtn.addEventListener('click', async () => {
-    try {
-        const { data, error } = await supabase.auth.signInWithOAuth({ provider: 'google' });
-        if (error) throw error;
-        // This redirects automatically to Google OAuth
-    } catch (err) {
-        showMessage(err.message);
-    }
-});
+// Google Login
+if (googleBtn) {
+    googleBtn.addEventListener('click', async () => {
+        try {
+            const { error } = await supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: window.location.origin + '/profile.html'
+                }
+            });
 
-// 6️⃣ GitHub login
-githubBtn.addEventListener('click', async () => {
-    try {
-        const { data, error } = await supabase.auth.signInWithOAuth({ provider: 'github' });
-        if (error) throw error;
-    } catch (err) {
-        showMessage(err.message);
-    }
-});
+            if (error) throw error;
 
-// 7️⃣ Check if already logged in
-const userToken = localStorage.getItem('primemar_token');
-if (userToken) {
-    window.location.href = './profile.html';
+        } catch (error) {
+            showMessage(error.message);
+        }
+    });
 }
+
+// GitHub Login
+if (githubBtn) {
+    githubBtn.addEventListener('click', async () => {
+        try {
+            const { error } = await supabase.auth.signInWithOAuth({
+                provider: 'github',
+                options: {
+                    redirectTo: window.location.origin + '/profile.html'
+                }
+            });
+
+            if (error) throw error;
+
+        } catch (error) {
+            showMessage(error.message);
+        }
+    });
+}
+
+// Run on load
+checkExistingSession();
