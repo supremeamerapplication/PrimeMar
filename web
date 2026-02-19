@@ -1,4 +1,11 @@
 
+session.js:150 
+ Error updating activity: ReferenceError: AUTH is not defined
+    at updateLastActivity (session.js:142:26)
+updateLastActivity	@	session.js:150
+setInterval		
+(anonymous)	@	session.js:163
+﻿
 
 
 
