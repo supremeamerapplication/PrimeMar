@@ -1,394 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Login - SupremeAmer Coin Airdrop</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    :root {
-      --primary: #ff9800;
-      --primary-dark: #f57c00;
-      --primary-light: #ffb74d;
-      --dark-bg: #121212;
-      --card-bg: rgba(30, 30, 40, 0.85);
-      --text-light: #ffffff;
-      --text-muted: rgba(255, 255, 255, 0.7);
-      --error: #ff4c4c;
-      --success: #36ff9b;
-      --border-radius: 16px;
-      --transition: all 0.3s ease;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, var(--dark-bg) 0%, #1e1e2f 65%, var(--primary) 100%);
-      font-family: 'Montserrat', Arial, sans-serif;
-      padding: 20px;
-      color: var(--text-light);
-    }
-
-    .login-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      border-radius: var(--border-radius);
-      box-shadow: 0 16px 40px rgba(255, 152, 0, 0.15), 0 8px 32px rgba(0, 0, 0, 0.3);
-      padding: 2.5rem 2rem;
-      width: 100%;
-      max-width: 420px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: var(--transition);
-    }
-
-    .login-card:hover {
-      box-shadow: 0 20px 50px rgba(255, 152, 0, 0.2), 0 10px 40px rgba(0, 0, 0, 0.4);
-    }
-
-    .logo {
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-
-    .logo h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--text-light);
-      margin-bottom: 0.25rem;
-    }
-
-    .logo p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      font-weight: 400;
-    }
-
-    .login-card h2 {
-      color: var(--primary);
-      margin-bottom: 1.5rem;
-      font-size: 1.8rem;
-      font-weight: 600;
-      text-align: center;
-    }
-
-    .form-group {
-      width: 100%;
-      margin-bottom: 1.5rem;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.9rem;
-      margin-bottom: 0.5rem;
-      color: var(--text-light);
-      font-weight: 500;
-    }
-
-    .input-wrapper {
-      position: relative;
-    }
-
-    .input-wrapper i {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-muted);
-    }
-
-    .login-card input {
-      width: 100%;
-      padding: 14px 14px 14px 42px;
-      border: 1.5px solid rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      font-size: 1rem;
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text-light);
-      outline: none;
-      transition: var(--transition);
-      font-family: inherit;
-    }
-
-    .login-card input:focus {
-      border: 1.5px solid var(--primary);
-      background: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.2);
-    }
-
-    .login-card input::placeholder {
-      color: var(--text-muted);
-    }
-
-    .login-card button {
-      width: 100%;
-      padding: 14px 0;
-      background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
-      color: #222;
-      border: none;
-      border-radius: 10px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 4px 16px rgba(255, 152, 0, 0.3);
-      margin-top: 0.5rem;
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .login-card button:hover, .login-card button:focus {
-      background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary) 100%);
-      box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
-      transform: translateY(-2px);
-    }
-
-    .login-card .error, .login-card .success {
-      width: 100%;
-      text-align: center;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
-      min-height: 1.5em;
-      padding: 10px;
-      border-radius: 8px;
-    }
-
-    .login-card .error { 
-      background: rgba(255, 76, 76, 0.1);
-      color: var(--error);
-      border: 1px solid rgba(255, 76, 76, 0.2);
-    }
-
-    .login-card .success { 
-      background: rgba(54, 255, 155, 0.1);
-      color: var(--success);
-      border: 1px solid rgba(54, 255, 155, 0.2);
-    }
-
-    .divider {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      margin: 1.5rem 0;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    .divider::before, .divider::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .divider span {
-      padding: 0 1rem;
-    }
-
-    .register-link {
-      text-align: center;
-      margin-top: 1rem;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    .register-link a {
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 500;
-      transition: var(--transition);
-    }
-
-    .register-link a:hover {
-      color: var(--primary-light);
-      text-decoration: underline;
-    }
-
-    @media (max-width: 480px) {
-      .login-card { 
-        padding: 2rem 1.5rem; 
-      }
-
-      .logo h1 {
-        font-size: 1.5rem;
-      }
-
-      .login-card h2 {
-        font-size: 1.5rem;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - PrimeMar</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/auth.css">
+    <link rel="icon" href="./assets/icons/primebird.svg" type="image/svg+xml">
 </head>
 <body>
-  <form id="loginForm" class="login-card" autocomplete="off">
-    <div class="logo">
-      <h1>SupremeAmer Coin</h1>
-      <p>Airdrop Program</p>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <img src="./assets/icons/primebird.svg" alt="PrimeMar" class="auth-logo">
+                <h1>Login to PrimeMar</h1>
+            </div>
+
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required placeholder="your@email.com">
+                    <span class="error-message" id="emailError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="••••••••">
+                    <span class="error-message" id="passwordError"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="loginBtn">Login</button>
+
+                <div class="form-message" id="formMessage"></div>
+            </form>
+
+            <div class="auth-divider">OR</div>
+
+            <div class="social-auth">
+                <button class="social-btn google-btn" id="googleSignIn">Sign in with Google</button>
+                <button class="social-btn github-btn" id="githubSignIn">Sign in with GitHub</button>
+            </div>
+
+            <div class="auth-footer">
+                <p>Don't have an account? <a href="./signup.html">Sign up here</a></p>
+                <p><a href="./index.html">Back to home</a></p>
+            </div>
+        </div>
     </div>
 
-    <h2>Welcome Back</h2>
-
-    <div class="error" id="error"></div>
-    <div class="success" id="success"></div>
-
-    <div class="form-group">
-      <label for="email">Email Address</label>
-      <div class="input-wrapper">
-        <i>✉️</i>
-        <input type="email" id="email" name="email" placeholder="your@email.com" required autocomplete="email">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="password">Password</label>
-      <div class="input-wrapper">
-        <i>🔒</i>
-        <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
-      </div>
-    </div>
-
-    <button type="submit">
-      <span>Login</span>
-    </button>
-
-    <div class="divider">
-      <span>OR</span>
-    </div>
-
-    <div class="register-link">
-      Don't have an account? <a href="register.html">Create Account</a>
-    </div>
-  </form>
-
-  <script>
-    import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-
-    const SUPABASE_URL = 'https://nbnijrrkkyvsgawziwlo.supabase.co'; 
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ibmlqcnJra3l2c2dhd3ppd2xvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMTExODYsImV4cCI6MjA4Njg4NzE4Nn0.uSdHfHbsJteCWISB2siHZr7CoE_TzeP_LOBcH6LdMrc';
-    
-    
-    
-
-    
-    (async function checkAlreadyLoggedIn() {
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session) {
-          // Already logged in, redirect to main page
-          window.location.href = 'index.html';
-        }
-      } catch (e) {
-        console.log('Not logged in, showing login form');
-      }
-    })();
-
-    document.getElementById('loginForm').onsubmit = async function(e) {
-      e.preventDefault();
-      document.getElementById('error').textContent = '';
-      document.getElementById('success').textContent = '';
-
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-
-      // Basic validation
-      if (!email || !password) {
-        document.getElementById('error').textContent = 'Please fill in all fields.';
-        return;
-      }
-
-      try {
-        // Show loading state
-        const submitBtn = document.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<span>Logging in...</span>';
-        submitBtn.disabled = true;
-
-        // 1. Sign in with Supabase Auth
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email: email,
-          password: password
-        });
-
-        if (error) throw error;
-
-        console.log('Login successful:', data);
-
-        // 2. Get user profile from database
-        const { data: userProfile, error: profileError } = await supabase
-          .from('users')
-          .select('*')
-          .eq('id', data.user.id)
-          .single();
-
-        if (!profileError && userProfile) {
-          // Store user data in localStorage for quick access
-          localStorage.setItem('user_id', data.user.id);
-          localStorage.setItem('username', userProfile.username || data.user.user_metadata.username || 'User');
-          localStorage.setItem('email', data.user.email);
-          localStorage.setItem('balance', userProfile.balance || 0);
-          localStorage.setItem('mining_speed', userProfile.mining_speed || 0.0002);
-          localStorage.setItem('isLoggedIn', 'true');
-          localStorage.setItem('loginTime', Date.now().toString());
-        } else {
-          // Create basic profile if it doesn't exist
-          localStorage.setItem('user_id', data.user.id);
-          localStorage.setItem('username', data.user.user_metadata.username || 'User');
-          localStorage.setItem('email', data.user.email);
-          localStorage.setItem('balance', 0);
-          localStorage.setItem('mining_speed', 0.0002);
-          localStorage.setItem('isLoggedIn', 'true');
-          localStorage.setItem('loginTime', Date.now().toString());
-        }
-
-        document.getElementById('success').textContent = 'Login successful! Redirecting...';
-        
-        setTimeout(() => window.location.href = 'feed.html', 1200);
-      } catch (err) {
-        console.error('Login error:', err);
-        let errorMessage = 'Login failed. Check your credentials.';
-        
-        if (err.message.includes('Invalid login credentials')) {
-          errorMessage = 'Invalid email or password. Please try again.';
-        } else if (err.message.includes('Email not confirmed')) {
-          errorMessage = 'Please confirm your email address before logging in.';
-        } else if (err.message.includes('network')) {
-          errorMessage = 'Network error. Please check your connection.';
-        } else if (err.message.includes('rate limit')) {
-          errorMessage = 'Too many login attempts. Please try again later.';
-        }
-        
-        document.getElementById('error').textContent = errorMessage;
-
-        // Reset button state
-        const submitBtn = document.querySelector('button[type="submit"]');
-        submitBtn.innerHTML = '<span>Login</span>';
-        submitBtn.disabled = false;
-      }
-    };
-
-    // Handle page visibility changes (tab switching)
-    document.addEventListener('visibilitychange', function() {
-      if (!document.hidden) {
-        // Page became visible, check if we're still logged in
-        checkAlreadyLoggedIn();
-      }
-    });
-  </script>
+    <!-- Scripts -->
+    <script type="module" src="../js/auth/login.js"></script>
 </body>
 </html>
