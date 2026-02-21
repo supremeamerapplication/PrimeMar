@@ -1,0 +1,2179 @@
+PROJECT TITLE: PrimeMar Full Production Flutter Application with Complete SA Economy, Messaging, Profiles, Payments, and Admin Transparency
+
+OVERVIEW
+PrimeMar is a full creator monetization social platform built with Flutter, Dart, and Supabase backend. It includes profiles, posting, chat, follow system, post views, creator verification, subscriptions, boost system, wallet, SA economy, withdrawals, admin transparency metrics, and payment integrations.
+
+The system must enforce strict economic rules, admin-controlled reserve, secure wallet accounting, and transparent metrics.
+
+SUPPORTED PLATFORMS
+
+Android
+iOS
+Web
+Windows Desktop
+
+TECH STACK
+
+Frontend: Flutter (Dart)
+Backend: Supabase
+Database: PostgreSQL
+Auth: Supabase Auth
+Storage: Supabase Storage
+Storage Bucket: media (single bucket only)
+Payments: Flutterwave and Paystack
+State Management: Riverpod
+
+STORAGE STRUCTURE
+
+media/
+avatars/
+posts/
+chat/
+documents/
+thumbnails/
+icons/
+
+Only ONE bucket allowed: media
+
+DATABASE TABLES
+
+users
+profiles
+wallets
+posts
+post_views
+followers
+messages
+conversations
+transactions
+subscriptions
+withdrawals
+boosts
+metrics
+reserve
+
+CORE SA ECONOMY SYSTEM
+
+SA is internal virtual reward currency.
+
+SA SPLIT FORMULA (GLOBAL RULE)
+
+Whenever SA is generated or spent:
+
+50% → Creator
+30% → Platform
+20% → Reserve
+
+IMPORTANT RULE:
+
+Reserve SA is NOT burned.
+Reserve SA is ONLY controlled by admin.
+
+Users cannot access reserve.
+
+FOLLOWER REWARD SYSTEM (CORRECTED RULE)
+
+Users earn SA ONLY when gaining NEW followers.
+
+Formula:
+
+0.5 SA per 1000 NEW followers
+
+Example:
+
+1,000 new followers → 0.5 SA
+5,000 new followers → 2.5 SA
+10,000 new followers → 5 SA
+
+Formula implementation:
+
+new_sa = floor(new_followers / 1000) × 0.5
+
+This must trigger automatically when follower milestone reached.
+
+This is NOT daily earning.
+
+POST VIEW SYSTEM
+
+Each post view must be tracked.
+
+Table: post_views
+
+Fields:
+
+id
+post_id
+viewer_id
+timestamp
+
+Post must display total views count.
+
+Profile must show total profile views.
+
+PROFILE SYSTEM
+
+Each user has profile containing:
+
+user_id
+username
+display_name
+bio
+avatar_url
+followers_count
+following_count
+posts_count
+profile_views
+verified_status
+
+Users must be able to:
+
+view profiles
+view posts of profile
+follow/unfollow
+view follower count
+view verified badge 💠
+
+FOLLOW SYSTEM
+
+followers table:
+
+id
+follower_id
+following_id
+created_at
+
+Must prevent duplicate follows.
+
+POST SYSTEM
+
+Users can create posts with:
+
+text
+image
+video
+file
+
+posts table:
+
+id
+creator_id
+content
+media_url
+views_count
+likes_count
+boost_active
+boost_expiration
+created_at
+
+BOOST SYSTEM
+
+Boost cost: 100 SA
+
+Distribution:
+
+50 SA → creator
+30 SA → platform
+20 SA → reserve
+
+Boost duration:
+
+48 hours
+
+Boost effects:
+
+increase visibility
+increase discovery priority
+
+WALLET SYSTEM
+
+wallets table:
+
+user_id
+sa_balance
+usd_balance
+ngn_balance
+created_at
+
+Wallet must never go negative.
+
+RESERVE SYSTEM
+
+reserve table:
+
+total_sa_reserved
+updated_at
+
+IMPORTANT:
+
+Only admin can modify reserve.
+
+Admin dashboard must show:
+
+reserve total
+weekly reserve change
+monthly reserve change
+
+VERIFICATION SYSTEM
+
+Requirements:
+
+minimum 3000 followers
+verification fee $25
+
+Payments via Flutterwave or Paystack only.
+
+Verification grants:
+
+verified badge 💠
+subscription access
+creator monetization access
+
+SUBSCRIPTION SYSTEM
+
+Cost: $7/month
+
+Distribution:
+
+50% creator
+30% platform
+20% reserve
+
+subscription table:
+
+user_id
+creator_id
+status
+start_date
+expiry_date
+
+WITHDRAWAL SYSTEM
+
+Users convert SA to USD or NGN.
+
+Minimum withdrawal:
+
+$5 USD equivalent
+
+Withdrawal cooldown:
+
+24 hours
+
+withdrawals table:
+
+id
+user_id
+sa_amount
+usd_amount
+status
+created_at
+
+PAYMENT SYSTEM
+
+Payments handled ONLY via:
+
+Flutterwave
+Paystack
+
+Supported payments:
+
+verification fee
+subscriptions
+wallet funding
+
+Transactions must be verified via backend.
+
+TRANSACTION SYSTEM
+
+transactions table:
+
+id
+user_id
+type
+
+Types:
+
+earn
+boost
+withdraw
+subscription
+verification
+
+Fields:
+
+amount
+creator_share
+platform_share
+reserve_share
+timestamp
+
+ADMIN SYSTEM
+
+Admin email:
+
+supremealpha04@gmail.com
+
+Admin privileges:
+
+view users
+view transactions
+view reserve
+view metrics
+manage reserve
+adjust conversion rate
+view withdrawals
+view earnings
+
+ADMIN METRICS DASHBOARD
+
+Must show:
+
+total users
+active users
+verified creators
+total SA distributed
+total SA reserved
+total SA withdrawn
+platform earnings
+total posts
+total views
+
+CHAT SYSTEM
+
+Users can message each other.
+
+conversations table:
+
+id
+user1_id
+user2_id
+created_at
+
+messages table:
+
+id
+conversation_id
+sender_id
+content
+media_url
+created_at
+
+Chat features:
+
+text messages
+image messages
+file messages
+
+PROFILE VIEW TRACKING
+
+Each profile visit must be tracked.
+
+profile_views table:
+
+id
+viewer_id
+profile_id
+timestamp
+
+FILE STRUCTURE
+
+lib/
+
+main.dart
+
+core/
+config.dart
+constants.dart
+supabase.dart
+
+models/
+user_model.dart
+profile_model.dart
+wallet_model.dart
+post_model.dart
+message_model.dart
+transaction_model.dart
+
+services/
+auth_service.dart
+profile_service.dart
+post_service.dart
+wallet_service.dart
+chat_service.dart
+payment_service.dart
+reserve_service.dart
+metrics_service.dart
+
+providers/
+auth_provider.dart
+user_provider.dart
+post_provider.dart
+wallet_provider.dart
+chat_provider.dart
+
+screens/
+splash/
+auth/
+home/
+profile/
+chat/
+post/
+wallet/
+admin/
+
+widgets/
+post_card.dart
+profile_header.dart
+chat_bubble.dart
+user_avatar.dart
+
+utils/
+helpers.dart
+validators.dart
+
+ECONOMIC ENFORCEMENT RULES
+
+Must enforce:
+
+no negative wallet balance
+no unauthorized reserve access
+accurate SA split always
+accurate transaction recording
+secure payment verification
+
+SECURITY
+
+Supabase Auth required
+Secure API validation
+Payment verification required
+
+FINAL REQUIREMENT
+
+PrimeMar must function as a complete creator monetization platform including:
+
+profiles
+posting
+profile viewing
+post views
+follow system
+chat system
+wallet system
+SA economy
+reserve protection
+boost system
+verification system
+subscription system
+withdrawal system
+admin transparency system
+Flutterwave and Paystack payment integration
+single storage bucket system
+
+This specification must be followed exactly to ensure economic stability, transparency, and production readiness.
+
+PROJECT NAME: PrimeMar Mobile App
+MODULE: Messages, Comments, Likes, Notifications, Replies, Message Lock System
+
+PURPOSE:
+Implement a complete social interaction system for PrimeMar that combines the usability of Twitter, Instagram, and WhatsApp, with secure messaging, engagement features, and SA-economy integration.
+
+TECH STACK:
+Frontend: Flutter (Dart)
+Backend: Supabase (Auth, Database, Realtime, Storage)
+Payments: Flutterwave and Paystack
+Storage Bucket: single bucket named "media"
+
+==================================================
+SECTION 1: DIRECT MESSAGE SYSTEM (DM)
+==================================================
+
+FEATURES:
+
+• One-to-one messaging
+• Send and receive text messages
+• Send images, videos, files
+• Real-time message delivery using Supabase realtime
+• Message read/unread status
+• Message timestamps
+• Message locking and unlocking
+• Locked chats hidden from main inbox
+
+MESSAGE UI DESIGN:
+
+Conversation list screen must display:
+
+- user avatar
+- display name
+- verified badge 💠 if verified
+- last message preview
+- timestamp
+- unread badge count
+
+Chat screen layout:
+
+- sender messages aligned right
+- receiver messages aligned left
+- message bubble design similar to WhatsApp
+- input field at bottom
+- send button
+
+==================================================
+SECTION 2: MESSAGE LOCK / UNLOCK SYSTEM
+==================================================
+
+Purpose:
+Allow users to lock chats for privacy.
+
+LOCK FEATURES:
+
+• User can lock any chat
+• Locked chats move to "Locked Chats"
+• Locked chats hidden from main inbox
+• Locked chats require PIN to open
+
+LOCK PROMPT UI:
+
+Display:
+
+"This conversation is locked"
+"Enter PIN to unlock"
+
+Unlock button
+
+DATABASE TABLE:
+
+chat_locks
+
+FIELDS:
+
+id UUID PRIMARY KEY
+user_id UUID
+chat_user_id UUID
+is_locked BOOLEAN
+created_at TIMESTAMP
+
+==================================================
+SECTION 3: COMMENTS SYSTEM
+==================================================
+
+FEATURES:
+
+• Users can comment on posts
+• Users can reply to comments
+• Users can like comments
+• Real-time comment updates
+
+COMMENT UI:
+
+- avatar
+- display name
+- verified badge 💠
+- comment text
+- reply button
+- timestamp
+
+DATABASE TABLE:
+
+comments
+
+FIELDS:
+
+id UUID PRIMARY KEY
+post_id UUID
+user_id UUID
+content TEXT
+created_at TIMESTAMP
+
+==================================================
+SECTION 4: COMMENT REPLIES SYSTEM
+==================================================
+
+FEATURES:
+
+• Reply to comments
+• Nested replies supported
+
+DATABASE TABLE:
+
+comment_replies
+
+FIELDS:
+
+id UUID PRIMARY KEY
+comment_id UUID
+user_id UUID
+content TEXT
+created_at TIMESTAMP
+
+==================================================
+SECTION 5: LIKE SYSTEM
+==================================================
+
+FEATURES:
+
+Users can like:
+
+• posts
+• comments
+• replies
+
+DATABASE TABLE:
+
+likes
+
+FIELDS:
+
+id UUID PRIMARY KEY
+user_id UUID
+post_id UUID
+comment_id UUID
+reply_id UUID
+created_at TIMESTAMP
+
+==================================================
+SECTION 6: NOTIFICATION SYSTEM
+==================================================
+
+FEATURES:
+
+Notify users when:
+
+• someone likes their post
+• someone comments
+• someone replies
+• someone follows
+• someone sends message
+• verification approved
+• boost received
+• subscription received
+• withdrawal completed
+
+DATABASE TABLE:
+
+notifications
+
+FIELDS:
+
+id UUID PRIMARY KEY
+user_id UUID
+type TEXT
+reference_id UUID
+message TEXT
+is_read BOOLEAN
+created_at TIMESTAMP
+
+==================================================
+SECTION 7: MESSAGE DATABASE TABLE
+==================================================
+
+TABLE:
+
+messages
+
+FIELDS:
+
+id UUID PRIMARY KEY
+sender_id UUID
+receiver_id UUID
+content TEXT
+media_url TEXT
+message_type TEXT
+is_read BOOLEAN
+is_locked BOOLEAN
+created_at TIMESTAMP
+
+==================================================
+SECTION 8: FOLLOW SYSTEM
+==================================================
+
+TABLE:
+
+follows
+
+FIELDS:
+
+id UUID PRIMARY KEY
+follower_id UUID
+following_id UUID
+created_at TIMESTAMP
+
+==================================================
+SECTION 9: PROFILE VIEW SYSTEM
+==================================================
+
+Users can view profiles showing:
+
+• avatar
+• display name
+• username
+• verified badge 💠
+• followers count
+• following count
+• posts count
+• bio
+
+Profile actions:
+
+• Follow
+• Message
+• Subscribe
+
+==================================================
+SECTION 10: REALTIME REQUIREMENTS
+==================================================
+
+Supabase realtime must be enabled for:
+
+• messages
+• comments
+• replies
+• likes
+• notifications
+
+==================================================
+SECTION 11: STORAGE BUCKET
+==================================================
+
+Single storage bucket:
+
+media
+
+Folders:
+
+media/profile_images
+media/post_images
+media/post_videos
+media/chat_files
+
+==================================================
+SECTION 12: SECURITY RULES
+==================================================
+
+Prevent:
+
+• spam messaging
+• bot messaging
+• abuse
+
+Limits:
+
+max 30 messages per minute per user
+
+Only authenticated users can:
+
+• send messages
+• comment
+• like
+• follow
+
+==================================================
+SECTION 13: SA ECONOMY RULES
+==================================================
+
+Messages do NOT generate SA
+
+Comments do NOT generate SA
+
+Likes do NOT generate SA
+
+SA generated ONLY when:
+
+user reaches 1000 new followers milestone
+
+SA RULE:
+
+0.5 SA per 1000 new followers
+
+Daily limit:
+
+80 SA maximum per day
+
+==================================================
+SECTION 14: ADMIN CONTROL
+==================================================
+
+Admin email:
+
+supremealpha04@gmail.com
+
+Admin can:
+
+• ban users
+• suspend users
+• unsuspend users
+• manage reserve SA
+• view system metrics
+
+Admin cannot read private messages.
+
+==================================================
+SECTION 15: FLUTTER SCREENS REQUIRED
+==================================================
+
+messages_screen.dart
+chat_screen.dart
+notifications_screen.dart
+profile_screen.dart
+comments_screen.dart
+
+==================================================
+SECTION 16: PAYMENT INTEGRATION
+==================================================
+
+Payments handled using:
+
+Flutterwave
+Paystack
+
+Used for:
+
+• verification payment
+• subscription payment
+• SA purchase
+
+===============================================
+PROJECT NAME: PrimeMar Mobile App
+MODULE: Messages, Comments, Likes, Notifications, Replies, Message Lock System
+
+PURPOSE:
+Implement a complete social interaction system for PrimeMar that combines the usability of Twitter, Instagram, and WhatsApp, with secure messaging, engagement features, and SA-economy integration.
+
+TECH STACK:
+Frontend: Flutter (Dart)
+Backend: Supabase (Auth, Database, Realtime, Storage)
+Payments: Flutterwave and Paystack
+Storage Bucket: single bucket named "media"
+
+==================================================
+SECTION 1: DIRECT MESSAGE SYSTEM (DM)
+==================================================
+
+FEATURES:
+
+• One-to-one messaging
+• Send and receive text messages
+• Send images, videos, files
+• Real-time message delivery using Supabase realtime
+• Message read/unread status
+• Message timestamps
+• Message locking and unlocking
+• Locked chats hidden from main inbox
+
+MESSAGE UI DESIGN:
+
+Conversation list screen must display:
+
+- user avatar
+- display name
+- verified badge 💠 if verified
+- last message preview
+- timestamp
+- unread badge count
+
+Chat screen layout:
+
+- sender messages aligned right
+- receiver messages aligned left
+- message bubble design similar to WhatsApp
+- input field at bottom
+- send button
+
+==================================================
+SECTION 2: MESSAGE LOCK / UNLOCK SYSTEM
+==================================================
+
+Purpose:
+Allow users to lock chats for privacy.
+
+LOCK FEATURES:
+
+• User can lock any chat
+• Locked chats move to "Locked Chats"
+• Locked chats hidden from main inbox
+• Locked chats require PIN to open
+
+LOCK PROMPT UI:
+
+Display:
+
+"This conversation is locked"
+"Enter PIN to unlock"
+
+Unlock button
+
+DATABASE TABLE:
+
+chat_locks
+
+FIELDS:
+
+id UUID PRIMARY KEY
+user_id UUID
+chat_user_id UUID
+is_locked BOOLEAN
+created_at TIMESTAMP
+
+==================================================
+SECTION 3: COMMENTS SYSTEM
+==================================================
+
+FEATURES:
+
+• Users can comment on posts
+• Users can reply to comments
+• Users can like comments
+• Real-time comment updates
+
+COMMENT UI:
+
+- avatar
+- display name
+- verified badge 💠
+- comment text
+- reply button
+- timestamp
+
+DATABASE TABLE:
+
+comments
+
+FIELDS:
+
+id UUID PRIMARY KEY
+post_id UUID
+user_id UUID
+content TEXT
+created_at TIMESTAMP
+
+==================================================
+SECTION 4: COMMENT REPLIES SYSTEM
+==================================================
+
+FEATURES:
+
+• Reply to comments
+• Nested replies supported
+
+DATABASE TABLE:
+
+comment_replies
+
+FIELDS:
+
+id UUID PRIMARY KEY
+comment_id UUID
+user_id UUID
+content TEXT
+created_at TIMESTAMP
+
+==================================================
+SECTION 5: LIKE SYSTEM
+==================================================
+
+FEATURES:
+
+Users can like:
+
+• posts
+• comments
+• replies
+
+DATABASE TABLE:
+
+likes
+
+FIELDS:
+
+id UUID PRIMARY KEY
+user_id UUID
+post_id UUID
+comment_id UUID
+reply_id UUID
+created_at TIMESTAMP
+
+==================================================
+SECTION 6: NOTIFICATION SYSTEM
+==================================================
+
+FEATURES:
+
+Notify users when:
+
+• someone likes their post
+• someone comments
+• someone replies
+• someone follows
+• someone sends message
+• verification approved
+• boost received
+• subscription received
+• withdrawal completed
+
+DATABASE TABLE:
+
+notifications
+
+FIELDS:
+
+id UUID PRIMARY KEY
+user_id UUID
+type TEXT
+reference_id UUID
+message TEXT
+is_read BOOLEAN
+created_at TIMESTAMP
+
+==================================================
+SECTION 7: MESSAGE DATABASE TABLE
+==================================================
+
+TABLE:
+
+messages
+
+FIELDS:
+
+id UUID PRIMARY KEY
+sender_id UUID
+receiver_id UUID
+content TEXT
+media_url TEXT
+message_type TEXT
+is_read BOOLEAN
+is_locked BOOLEAN
+created_at TIMESTAMP
+
+==================================================
+SECTION 8: FOLLOW SYSTEM
+==================================================
+
+TABLE:
+
+follows
+
+FIELDS:
+
+id UUID PRIMARY KEY
+follower_id UUID
+following_id UUID
+created_at TIMESTAMP
+
+==================================================
+SECTION 9: PROFILE VIEW SYSTEM
+==================================================
+
+Users can view profiles showing:
+
+• avatar
+• display name
+• username
+• verified badge 💠
+• followers count
+• following count
+• posts count
+• bio
+
+Profile actions:
+
+• Follow
+• Message
+• Subscribe
+
+==================================================
+SECTION 10: REALTIME REQUIREMENTS
+==================================================
+
+Supabase realtime must be enabled for:
+
+• messages
+• comments
+• replies
+• likes
+• notifications
+
+==================================================
+SECTION 11: STORAGE BUCKET
+==================================================
+
+Single storage bucket:
+
+media
+
+Folders:
+
+media/profile_images
+media/post_images
+media/post_videos
+media/chat_files
+
+==================================================
+SECTION 12: SECURITY RULES
+==================================================
+
+Prevent:
+
+• spam messaging
+• bot messaging
+• abuse
+
+Limits:
+
+max 30 messages per minute per user
+
+Only authenticated users can:
+
+• send messages
+• comment
+• like
+• follow
+
+==================================================
+SECTION 13: SA ECONOMY RULES
+==================================================
+
+Messages do NOT generate SA
+
+Comments do NOT generate SA
+
+Likes do NOT generate SA
+
+SA generated ONLY when:
+
+user reaches 1000 new followers milestone
+
+SA RULE:
+
+0.5 SA per 1000 new followers
+
+Daily limit:
+
+80 SA maximum per day
+
+==================================================
+SECTION 14: ADMIN CONTROL
+==================================================
+
+Admin email:
+
+supremealpha04@gmail.com
+
+Admin can:
+
+• ban users
+• suspend users
+• unsuspend users
+• manage reserve SA
+• view system metrics
+
+Admin cannot read private messages.
+
+==================================================
+SECTION 15: FLUTTER SCREENS REQUIRED
+==================================================
+
+messages_screen.dart
+chat_screen.dart
+notifications_screen.dart
+profile_screen.dart
+comments_screen.dart
+
+==================================================
+SECTION 16: PAYMENT INTEGRATION
+==================================================
+Role-Based Access Control (RBAC) — Enterprise Level
+OVERVIEW
+PrimeMar uses a strict Role-Based Access Control (RBAC) system with 10 fixed admin roles, each having clearly defined permissions and restrictions.
+This ensures:
+• Security
+• Financial protection
+• Privacy protection
+• Fraud prevention
+• Proper operational structure
+Only ONE Super Admin has full control.
+All other admins have limited permissions.
+ADMIN LEVEL HIERARCHY
+Level 10 — Super Admin
+Level 9 — Finance Admin
+Level 8 — Reserve Admin
+Level 7 — Payment Admin
+Level 6 — User Management Admin
+Level 5 — Content Moderation Admin
+Level 4 — Chat Safety Admin
+Level 3 — Marketing Admin
+Level 2 — Analytics Admin
+Level 1 — Tech Support Admin
+ROLE 1 — SUPER ADMIN
+Full system control.
+Permissions:
+• Full database access
+• Modify reserve SA
+• Approve or reject withdrawals
+• Modify SA earning rules
+• Modify SA conversion rate
+• Modify subscription price
+• Modify verification fee
+• Create / suspend admins
+• Access all dashboards
+• Access all metrics
+• Access payment logs
+• Access reports
+Email example:
+supremealpha04@gmail.com
+Only ONE Super Admin allowed.
+
+ROLE 2 — FINANCE ADMIN
+Handles money review and financial safety.
+Permissions:
+• View withdrawals
+• Approve withdrawals
+• Reject withdrawals
+• View platform earnings
+• View payment logs
+• View SA conversions
+Restrictions:
+• Cannot modify reserve
+• Cannot modify SA rules
+• Cannot access private messages
+ROLE 3 — RESERVE ADMIN
+Controls reserve SA.
+Permissions:
+• View reserve balance
+• Modify reserve balance
+• Release reserve SA
+• Audit reserve logs
+Restrictions:
+• Cannot approve withdrawals
+• Cannot modify users
+• Cannot access chats
+Reserve is protected and cannot be accessed by other roles.
+ROLE 4 — PAYMENT ADMIN
+Handles payment verification.
+Permissions:
+• View Flutterwave payments
+• View Paystack payments
+• Verify verification payments
+• Verify subscriptions
+• Verify boost payments
+Restrictions:
+• Cannot modify reserve
+• Cannot modify users
+ROLE 5 — USER MANAGEMENT ADMIN
+Handles users and enforcement.
+Permissions:
+• View all users
+• Ban users
+• Suspend users
+• Freeze wallets
+• Restrict accounts
+Restrictions:
+• Cannot access reserve
+• Cannot modify financial rules
+ROLE 6 — CONTENT MODERATION ADMIN
+Handles posts and comments.
+Permissions:
+• Delete posts
+• Delete comments
+• Review reported posts
+• Suspend abusive users
+Restrictions:
+• Cannot access financial systems
+• Cannot access reserve
+ROLE 7 — CHAT SAFETY ADMIN
+Handles chat abuse and safety.
+Permissions:
+• Review reported messages
+• Suspend abusive users
+• Lock chat access
+Restrictions:
+• Cannot read private chats unless reported
+• Cannot access finance
+ROLE 8 — MARKETING ADMIN
+Handles growth and visibility.
+Permissions:
+• Send announcements
+• Manage featured creators
+• Manage promotions
+• Manage boost visibility
+Restrictions:
+• Cannot access money
+• Cannot access reserve
+ROLE 9 — ANALYTICS ADMIN
+Handles data and reports.
+Permissions:
+• View analytics dashboard
+• View growth metrics
+• View SA distribution
+Restrictions:
+• Read-only access
+• Cannot modify anything
+ROLE 10 — TECH SUPPORT ADMIN
+Handles support issues.
+Permissions:
+• Help users resolve login issues
+• Help reset passwords
+• View account logs
+Restrictions:
+• Cannot access payments
+• Cannot access reserve
+ADMIN DATABASE TABLE STRUCTURE
+Supabase SQL:
+Copy code
+
+create table admins (
+  id uuid primary key default uuid_generate_v4(),
+  email text unique not null,
+  role text not null,
+  is_active boolean default true,
+  created_at timestamp default now()
+);
+ADMIN ROLE ENUM
+Allowed values:
+Copy code
+
+super_admin
+finance_admin
+reserve_admin
+payment_admin
+user_admin
+content_admin
+chat_admin
+marketing_admin
+analytics_admin
+support_admin
+ADMIN LOGIN FLOW
+Admin logs in using Supabase Auth.
+System checks admins table:
+Copy code
+
+select role from admins where email = current_user_email
+If exists → allow access
+ROLE-BASED ACCESS CONTROL LOGIC
+Example backend logic:
+Copy code
+
+function requireRole(requiredRoles) {
+   if (!requiredRoles.includes(admin.role)) {
+      throw new Error("Access denied");
+   }
+}
+Example usage:
+Copy code
+
+requireRole(["super_admin", "finance_admin"])
+RESERVE SECURITY RULE
+Reserve SA can ONLY be modified by:
+super_admin
+reserve_admin
+Never accessible by other roles.
+WITHDRAWAL APPROVAL FLOW
+Step 1 — User requests withdrawal
+Step 2 — Finance Admin reviews
+Step 3 — Super Admin final approval (optional)
+CHAT PRIVACY PROTECTION
+Admins cannot read chats unless:
+• Message reported
+• Abuse flagged
+Protects user privacy.
+ADMIN DASHBOARD STRUCTURE
+Copy code
+
+/admin
+   dashboard.dart
+   users.dart
+   reserve.dart
+   withdrawals.dart
+   payments.dart
+   analytics.dart
+   reports.dart
+   admins.dart
+Each page protected by role.
+SUPABASE ROW LEVEL SECURITY EXAMPLE
+Reserve protection:
+Copy code
+
+create policy reserve_admin_only
+on reserve
+for update
+using (
+  auth.email() in (
+    select email from admins
+    where role in ('super_admin','reserve_admin')
+  )
+);
+ADMIN CREATION EXAMPLE
+Insert admin:
+Copy code
+
+insert into admins (email, role)
+values ('finance@primemar.com','finance_admin');
+ADMIN PERMISSION MATRIX
+Copy code
+
+Super Admin → Everything
+
+Finance Admin → Withdrawals, payments
+
+Reserve Admin → Reserve only
+
+Payment Admin → Payment verification
+
+User Admin → Ban, suspend users
+
+Content Admin → Posts and comments
+
+Chat Admin → Chat safety only
+
+Marketing Admin → Promotions only
+
+Analytics Admin → Metrics only
+
+Support Admin → Support only
+ADMIN SECURITY RULES
+Never allow frontend permission control.
+Always enforce on backend.
+Never expose reserve modification publicly.
+Never allow multiple Super Admins.
+Log all admin actions.
+ADMIN ACTION LOG TABLE
+Copy code
+
+create table admin_logs (
+  id uuid primary key default uuid_generate_v4(),
+  admin_email text,
+  action text,
+  created_at timestamp default now()
+);
+RESULT
+PrimeMar now has enterprise-level admin security.
+Prevents:
+• Fraud
+• Unauthorized reserve access
+• Abuse
+• Financial manipulation
+Supports:
+• Full platform control
+• Safe scaling
+• Investor-ready structure
+
+If not → deny access
+Payments handled using:
+
+Flutterwave
+Paystack
+
+Used for:
+
+• verification payment
+• subscription payment
+• SA purchase
+
+==================================================
+
+CORE DESIGN PRINCIPLE
+PrimeMar combines:
+Twitter → clean feed, profiles, repost system
+Instagram → media posts, profile layout, stories style
+WhatsApp → messaging system, chat UI, chat lock
+TikTok → video feed, vertical scroll, engagement UI
+The UI must feel:
+• Modern
+• Fast
+• Clean
+• Professional
+• Minimal
+• Mobile-first
+GLOBAL DESIGN SYSTEM
+COLORS
+Primary Color
+#1D9BF0 (Prime Blue)
+Secondary Color
+#0F172A (Dark Navy)
+Background Light
+#FFFFFF
+Background Dark
+#000000
+Card Color
+#F8FAFC
+Border Color
+#E5E7EB
+Success Color
+#10B981
+Error Color
+#EF4444
+Verified Badge Color
+#1D9BF0
+SA Token Color
+#F59E0B
+TYPOGRAPHY
+Primary Font
+Inter
+Secondary Font
+Poppins
+Weights:
+Regular 400
+Medium 500
+SemiBold 600
+Bold 700
+MAIN NAVIGATION STRUCTURE
+Bottom Navigation Bar (like Twitter & Instagram)
+Tabs:
+Home
+Search
+Create Post
+Messages
+Profile
+SCREEN 1 — HOME FEED (Twitter + TikTok Hybrid)
+Layout:
+Top bar:
+Logo (PrimeMar bird) App name Notification icon
+Feed structure:
+Scrollable vertically
+Post card contains:
+User avatar (left) Username Verified badge 💠 Time
+Post text
+Post image OR video
+Actions row:
+Like Comment Repost Share View count
+SA earned indicator (if applicable)
+TikTok behavior:
+Videos autoplay when visible
+SCREEN 2 — PROFILE PAGE (Twitter + Instagram Hybrid)
+Top section:
+Banner image Profile avatar Display name Username Verified badge 💠
+Stats row:
+Followers Following Posts SA Balance
+Buttons:
+Follow / Unfollow Message Boost Profile
+Tabs:
+Posts Media Liked
+Grid view for media (Instagram style)
+SCREEN 3 — CREATE POST SCREEN
+Layout:
+User avatar Text input field
+Buttons:
+Add image Add video Add file
+Post button
+Show SA boost toggle
+Boost cost display
+
+SCREEN 4 — VIDEO VIEWER (TikTok Style)
+Full screen vertical video
+Overlay:
+Username Caption Music info (optional)
+Right side vertical buttons:
+Like Comment Share Boost
+Autoplay
+Swipe up/down navigation
+SCREEN 5 — MESSAGES SCREEN (WhatsApp Style)
+Chat list layout:
+User avatar Name Last message Time Unread badge
+Click opens chat
+SCREEN 6 — CHAT SCREEN (WhatsApp + Instagram Hybrid)
+Top bar:
+Back button User avatar Username Verified badge
+Chat bubbles:
+Sender right side Receiver left side
+Message types:
+Text Image Video
+Input bar:
+Text field Send button Media button
+Optional:
+Lock chat button
+CHAT LOCK FEATURE UI
+User taps:
+Lock chat
+Options:
+PIN lock Biometric lock
+Locked chat shows lock icon
+Requires unlock before viewing
+SCREEN 7 — SEARCH SCREEN (Instagram + Twitter Hybrid)
+Top:
+Search bar
+Results tabs:
+Users Posts Videos
+User result shows:
+Avatar Username Followers
+SCREEN 8 — NOTIFICATIONS SCREEN (Twitter Style)
+List layout:
+User liked your post
+User followed you
+User commented
+User replied
+User sent message
+User subscribed
+SCREEN 9 — COMMENTS SCREEN (Instagram Style)
+Post preview top
+Comment list:
+User avatar Username Comment Reply button
+Replies nested
+Input field bottom
+SCREEN 10 — ADMIN PANEL (Separate App or Restricted)
+Dashboard:
+Total users
+Active users
+Total SA
+Reserve SA
+Withdrawals
+Buttons based on role permissions
+POST CARD COMPONENT DESIGN
+Structure:
+Container Padding 12–16px Rounded corners 12px
+Shadow soft
+Avatar size 40px
+Username bold
+Text medium size
+Media full width
+Action icons size 24px
+MESSAGE BUBBLE DESIGN
+Sender bubble:
+Blue background White text Right aligned
+Receiver bubble:
+Gray background Black text Left aligned
+Rounded corners
+BUTTON DESIGN
+Primary button:
+Blue background White text Rounded 10px
+Secondary button:
+Gray background Dark text
+VERIFIED BADGE DESIGN
+Blue circle
+White check inside
+Placed beside username
+FOLLOW BUTTON STATES
+Not following:
+Blue button Text Follow
+Following:
+Gray button Text Following
+VIDEO PLAYER DESIGN
+Auto play
+Tap to pause
+Tap and hold show controls
+ANIMATION SYSTEM
+Smooth transitions
+Page transition 200ms–300ms
+Fade animation
+Slide animation
+DARK MODE SUPPORT
+Full dark theme support
+Background black
+Text white
+Cards dark gray
+
+Create a fully functional Settings System for primemar mobile app built with:
+Flutter (Windows compatible)
+Supabase (Auth, Database, Storage, Realtime)
+Flutterwave & Paystack (payments)
+Twitter + Instagram + WhatsApp style UI
+Settings must be modern, smooth, secure, and fast.
+SETTINGS SCREEN STRUCTURE
+Settings screen divided into sections:
+Copy code
+
+Settings
+ ├── Profile Settings
+ ├── Account Settings
+ ├── Privacy Settings
+ ├── Notification Settings
+ ├── Chat Settings
+ ├── Security Settings
+ ├── Wallet Settings
+ ├── Appearance Settings
+ ├── Data & Storage Settings
+ ├── Support & Help
+ ├── About App
+ └── Logout
+1. PROFILE SETTINGS
+Screen: Profile Settings
+Fields:
+• Profile Picture
+• Username
+• Full Name
+• Bio
+• Phone Number
+• Email (read-only)
+Functions:
+User can:
+• upload profile image
+• change username
+• change bio
+• change phone
+Supabase Storage bucket:
+Copy code
+
+profile-images
+Database table:
+Copy code
+
+users
+Columns:
+Copy code
+
+id
+username
+full_name
+bio
+phone
+profile_image_url
+updated_at
+2. ACCOUNT SETTINGS
+Screen: Account Settings
+Options:
+Copy code
+
+Change Email
+Change Password
+Deactivate Account
+Delete Account
+Functions:
+Change Email:
+Copy code
+
+supabase.auth.updateUser()
+Change Password:
+Copy code
+
+supabase.auth.updateUser()
+Delete Account:
+• request sent to admin
+• admin approves deletion
+Deactivate Account:
+Copy code
+
+users.status = inactive
+3. PRIVACY SETTINGS
+Screen options:
+Copy code
+
+Private Account toggle
+Show Online Status toggle
+Allow Profile View toggle
+Allow Message Requests toggle
+Allow Tagging toggle
+Database columns:
+Copy code
+
+is_private
+show_online
+allow_profile_view
+allow_message_request
+allow_tag
+4. NOTIFICATION SETTINGS
+Screen options:
+Copy code
+
+New Followers toggle
+Messages toggle
+Likes toggle
+Comments toggle
+Comment Replies toggle
+Mentions toggle
+Admin Announcements toggle
+Payment Notifications toggle
+Database table:
+Copy code
+
+notification_settings
+Columns:
+Copy code
+
+user_id
+followers
+messages
+likes
+comments
+replies
+mentions
+admin
+payments
+5. CHAT SETTINGS
+Options:
+Copy code
+
+Lock Messages toggle
+Who can message you:
+    Everyone
+    Followers only
+    Nobody
+Read receipts toggle
+Typing indicator toggle
+Database columns:
+Copy code
+
+messages_locked
+who_can_message
+read_receipts
+typing_indicator
+6. SECURITY SETTINGS
+Options:
+Copy code
+
+Enable 2FA
+Change Password
+Login Activity
+Logout from all devices
+Enable biometric lock
+Database table:
+Copy code
+
+security_settings
+Columns:
+Copy code
+
+user_id
+two_factor_enabled
+biometric_enabled
+Session table:
+Copy code
+
+user_sessions
+Columns:
+Copy code
+
+user_id
+device
+location
+last_active
+7. WALLET SETTINGS
+Options:
+Copy code
+
+View Balance
+Deposit Money
+Withdraw Money
+Transaction History
+Connect Bank Account
+Payment integration:
+Flutterwave Paystack
+Database table:
+Copy code
+
+wallets
+Columns:
+Copy code
+
+user_id
+balance
+total_earned
+total_withdrawn
+Transactions table:
+Copy code
+
+transactions
+Columns:
+Copy code
+
+id
+user_id
+type
+amount
+status
+created_at
+8. APPEARANCE SETTINGS
+Options:
+Copy code
+
+Theme:
+   Light
+   Dark
+   System default
+
+Font size:
+   Small
+   Medium
+   Large
+
+Reduce motion toggle
+Database columns:
+Copy code
+
+theme
+font_size
+reduce_motion
+9. DATA & STORAGE SETTINGS
+Options:
+Copy code
+
+Clear Cache
+Clear Image Cache
+Clear Chat Cache
+Download My Data
+Functions:
+Clear cache:
+Copy code
+
+delete local storage files
+Download data:
+Export user data from Supabase
+10. SUPPORT & HELP
+Options:
+Copy code
+
+Report Bug
+Contact Support
+Send Feedback
+FAQ
+Community Guidelines
+Database table:
+Copy code
+
+support_requests
+Columns:
+Copy code
+
+user_id
+message
+type
+status
+created_at
+11. ABOUT APP
+Show:
+Copy code
+
+App Version
+Build Number
+Terms of Service
+Privacy Policy
+12. LOGOUT
+Function:
+Copy code
+
+supabase.auth.signOut()
+Redirect to login screen.
+UI DESIGN STYLE
+Follow Twitter, Instagram, WhatsApp design:
+• clean white / dark UI
+• rounded cards
+• toggle switches
+• smooth animations
+• fast transitions
+Each setting row must include:
+Copy code
+
+Icon
+Title
+Subtitle
+Arrow OR Toggle
+FILE STRUCTURE:
+
+supreme_alpha/
+
+├── .env
+├── pubspec.yaml
+├── README.md
+
+├── android/
+├── ios/
+├── windows/
+├── macos/
+├── linux/
+├── web/
+
+├── assets/
+│   ├── fonts/
+│   │   ├── Poppins-Regular.ttf
+│   │   ├── Inter-Regular.ttf
+│   │   └── Montserrat-Regular.ttf
+│   │
+│   ├── images/
+│   │   ├── logo.png
+│   │   ├── default_avatar.png
+│   │   ├── post_placeholder.png
+│   │   └── empty.png
+│   │
+│   ├── icons/
+│   │   ├── home.svg
+│   │   ├── search.svg
+│   │   ├── post.svg
+│   │   ├── wallet.svg
+│   │   └── profile.svg
+│   │
+│   └── animations/
+│       ├── loading.json
+│       └── success.json
+
+├── lib/
+│
+│   ├── main.dart
+│   ├── app.dart
+│
+│   ├── core/
+│   │
+│   │   ├── constants/
+│   │   │   ├── app_colors.dart
+│   │   │   ├── app_icons.dart
+│   │   │   ├── app_strings.dart
+│   │   │   ├── api_constants.dart
+│   │   │   └── routes.dart
+│   │   │
+│   │   ├── theme/
+│   │   │   ├── light_theme.dart
+│   │   │   ├── dark_theme.dart
+│   │   │   └── theme_provider.dart
+│   │   │
+│   │   ├── utils/
+│   │   │   ├── validators.dart
+│   │   │   ├── formatter.dart
+│   │   │   ├── helpers.dart
+│   │   │   ├── logger.dart
+│   │   │   └── extensions.dart
+│   │   │
+│   │   ├── models/
+│   │   │   ├── user_model.dart
+│   │   │   ├── post_model.dart
+│   │   │   ├── comment_model.dart
+│   │   │   ├── reply_model.dart
+│   │   │   ├── message_model.dart
+│   │   │   ├── wallet_model.dart
+│   │   │   ├── transaction_model.dart
+│   │   │   ├── notification_model.dart
+│   │   │   ├── admin_model.dart
+│   │   │   ├── report_model.dart
+│   │   │   ├── sa_reward_model.dart
+│   │   │   └── settings_model.dart
+│   │   │
+│   │   ├── services/
+│   │   │   ├── supabase_service.dart
+│   │   │   ├── auth_service.dart
+│   │   │   ├── user_service.dart
+│   │   │   ├── post_service.dart
+│   │   │   ├── comment_service.dart
+│   │   │   ├── like_service.dart
+│   │   │   ├── follow_service.dart
+│   │   │   ├── chat_service.dart
+│   │   │   ├── notification_service.dart
+│   │   │   ├── wallet_service.dart
+│   │   │   ├── payment_service.dart
+│   │   │   ├── sa_reward_service.dart
+│   │   │   ├── reserve_service.dart
+│   │   │   ├── admin_service.dart
+│   │   │   ├── report_service.dart
+│   │   │   ├── storage_service.dart
+│   │   │   └── security_service.dart
+│   │   │
+│   │   └── providers/
+│   │       ├── auth_provider.dart
+│   │       ├── user_provider.dart
+│   │       ├── post_provider.dart
+│   │       ├── chat_provider.dart
+│   │       ├── wallet_provider.dart
+│   │       ├── sa_provider.dart
+│   │       ├── notification_provider.dart
+│   │       ├── settings_provider.dart
+│   │       └── admin_provider.dart
+│
+│   ├── widgets/
+│   │   ├── buttons/
+│   │   │   ├── primary_button.dart
+│   │   │   └── secondary_button.dart
+│   │   │
+│   │   ├── inputs/
+│   │   │   ├── text_field.dart
+│   │   │   └── password_field.dart
+│   │   │
+│   │   ├── cards/
+│   │   │   ├── post_card.dart
+│   │   │   ├── user_card.dart
+│   │   │   └── notification_card.dart
+│   │   │
+│   │   ├── chat/
+│   │   │   ├── message_bubble.dart
+│   │   │   └── chat_input.dart
+│   │   │
+│   │   ├── media/
+│   │   │   ├── image_view.dart
+│   │   │   └── video_player.dart
+│   │   │
+│   │   ├── dialogs/
+│   │   │   ├── confirm_dialog.dart
+│   │   │   └── loading_dialog.dart
+│   │   │
+│   │   └── common/
+│   │       ├── avatar.dart
+│   │       ├── loading.dart
+│   │       └── empty.dart
+│
+│   ├── features/
+│   │
+│   │   ├── splash/
+│   │   │   └── splash_screen.dart
+│   │
+│   │   ├── onboarding/
+│   │   │   └── onboarding_screen.dart
+│   │
+│   │   ├── auth/
+│   │   │   ├── login_screen.dart
+│   │   │   ├── register_screen.dart
+│   │   │   ├── forgot_password.dart
+│   │   │   └── verify_email.dart
+│   │
+│   │   ├── home/
+│   │   │   ├── home_screen.dart
+│   │   │   ├── feed_screen.dart
+│   │   │   └── video_feed_screen.dart
+│   │
+│   │   ├── search/
+│   │   │   ├── search_screen.dart
+│   │   │   ├── users_search.dart
+│   │   │   └── posts_search.dart
+│   │
+│   │   ├── post/
+│   │   │   ├── create_post.dart
+│   │   │   ├── edit_post.dart
+│   │   │   ├── post_details.dart
+│   │   │   └── post_view.dart
+│   │
+│   │   ├── comments/
+│   │   │   ├── comments_screen.dart
+│   │   │   └── replies_screen.dart
+│   │
+│   │   ├── profile/
+│   │   │   ├── profile_screen.dart
+│   │   │   ├── edit_profile.dart
+│   │   │   ├── followers_screen.dart
+│   │   │   └── following_screen.dart
+│   │
+│   │   ├── messages/
+│   │   │   ├── chat_list.dart
+│   │   │   ├── chat_screen.dart
+│   │   │   ├── lock_chat.dart
+│   │   │   └── unlock_chat.dart
+│   │
+│   │   ├── notifications/
+│   │   │   └── notifications_screen.dart
+│   │
+│   │   ├── wallet/
+│   │   │   ├── wallet_screen.dart
+│   │   │   ├── deposit_screen.dart
+│   │   │   ├── withdraw_screen.dart
+│   │   │   ├── transactions_screen.dart
+│   │   │   └── bank_account.dart
+│   │
+│   │   ├── sa/
+│   │   │   ├── sa_dashboard.dart
+│   │   │   ├── sa_history.dart
+│   │   │   └── sa_rules.dart
+│   │
+│   │   ├── settings/
+│   │   │   ├── settings_screen.dart
+│   │   │   ├── account_settings.dart
+│   │   │   ├── privacy_settings.dart
+│   │   │   ├── chat_settings.dart
+│   │   │   ├── notification_settings.dart
+│   │   │   ├── security_settings.dart
+│   │   │   ├── appearance_settings.dart
+│   │   │   ├── wallet_settings.dart
+│   │   │   └── support.dart
+│   │
+│   │   └── admin/
+│   │       ├── admin_dashboard.dart
+│   │       ├── manage_users.dart
+│   │       ├── manage_posts.dart
+│   │       ├── manage_comments.dart
+│   │       ├── manage_withdrawals.dart
+│   │       ├── manage_reserve.dart
+│   │       ├── manage_reports.dart
+│   │       ├── manage_admins.dart
+│   │       ├── analytics.dart
+│   │       └── admin_logs.dart
+│
+├── test/
+│   └── widget_test.dart
+END OF MASTER PROMPT
